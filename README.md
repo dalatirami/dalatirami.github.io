@@ -1,13 +1,14 @@
-# ⚙️ Infrastructure Repository | مستودع البنية التحتية
+# Rami Dalati — Portfolio
 
-**[English]**
-This repository is not a standalone software project. It serves as the primary DNS and infrastructure routing umbrella for hosting various web applications and tools under the `tech.dalati.org` domain via GitHub Pages. 
+> **Software Developer & Content Creator**  
+> Building Python desktop apps, web tools, and leading the Dalati English educational ecosystem.
 
-For my actual tools and projects, please visit my main portfolio. (Visitors to this domain are automatically redirected).
+🔗 **Live Website:** [rami.dalati.org](https://rami.dalati.org)
+
+
+## 📫 Connect with Me
+* **LinkedIn:** [https://www.linkedin.com/in/dalatirami/](https://www.linkedin.com/in/dalatirami/)
+* **GitHub:** [@dalatirami](https://github.com/dalatirami)
 
 ---
-
-**[العربية]**
-هذا المستودع ليس مشروعاً برمجياً مستقلاً. وظيفته الأساسية هي إدارة البنية التحتية وتوجيه النطاق (DNS) لاستضافة تطبيقات وأدوات الويب الفرعية تحت النطاق `tech.dalati.org` باستخدام خدمة GitHub Pages.
-
-للاطلاع على أدواتي ومشاريعي الفعلية، يرجى زيارة موقعي الرئيسي. (يتم توجيه زوار هذا النطاق تلقائياً).
+*© 2026 Rami Dalati. All rights reserved.*
