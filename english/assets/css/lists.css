@@ -1,0 +1,381 @@
+/**
+ * ==============================================================================
+ * Dalati English Lists Stylesheet (lists.css)
+ * ==============================================================================
+ * Shared lightweight stylesheet for resource & directory lists (p/*-list.html).
+ * Inherits design tokens from variables.css with full Dark/Light theme support.
+ * Mobile-first, zero animations, zero transitions, zero bloat.
+ */
+
+@import "./variables.css";
+
+/* Reset & Base Canvas */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  -webkit-tap-highlight-color: transparent;
+}
+
+html {
+  background-color: var(--bg-base);
+  color-scheme: dark light;
+  -webkit-text-size-adjust: 100%;
+}
+
+body.list-page {
+  min-height: 100vh;
+  min-height: 100dvh;
+  background-color: var(--bg-base);
+  font-family: var(--font-main);
+  color: var(--text-primary);
+  line-height: 1.5;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  padding: 0;
+}
+
+/* Container */
+.list-container {
+  width: 100%;
+  max-width: 600px;
+  margin: 0 auto;
+  padding: max(20px, env(safe-area-inset-top)) 16px max(80px, env(safe-area-inset-bottom));
+}
+
+/* Page Header (Visual Header matching rami-dalati-org) */
+.list-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  margin-bottom: 24px;
+  width: 100%;
+}
+
+.list-header-icon-box {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: var(--surface-card);
+  border: 1px solid var(--border-soft);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 12px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+  flex-shrink: 0;
+}
+
+.list-header-icon {
+  width: 28px;
+  height: 28px;
+  object-fit: contain;
+  display: block;
+}
+
+.list-header-icon-box svg {
+  width: 28px;
+  height: 28px;
+  stroke: var(--accent);
+  fill: none;
+}
+
+.list-header-title,
+.list-header h1 {
+  font-size: 1.45rem;
+  font-weight: 800;
+  color: var(--accent);
+  margin-bottom: 6px;
+  letter-spacing: -0.01em;
+}
+
+.list-header-desc,
+.list-header p {
+  font-size: 0.925rem;
+  color: var(--text-secondary);
+  line-height: 1.5;
+  max-width: 380px;
+  margin: 0 auto;
+}
+
+/* Items List */
+.items-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-bottom: 28px;
+}
+
+/* Card */
+.list-card,
+.book-card {
+  background: var(--surface-card);
+  border: 1px solid var(--border-soft);
+  border-radius: 16px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
+}
+
+/* Card Media / Thumbnail */
+.card-thumb-wrap {
+  width: 100%;
+  border-radius: 12px;
+  overflow: hidden;
+  background: var(--surface-high);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.card-thumb {
+  width: 100%;
+  max-height: 240px;
+  object-fit: cover;
+  display: block;
+}
+
+.card-thumb-avatar {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin: 0 auto;
+  display: block;
+  border: 2px solid var(--border-soft);
+}
+
+/* Tags */
+.book-tag {
+  font-size: 0.75rem;
+  font-weight: 700;
+  padding: 3px 12px;
+  border-radius: var(--radius-pill);
+  display: inline-block;
+  width: fit-content;
+  user-select: none;
+}
+
+.tag-grammar {
+  background: rgba(16, 185, 129, 0.15);
+  color: #10b981;
+  border: 1px solid rgba(16, 185, 129, 0.3);
+}
+
+.tag-vocab {
+  background: rgba(139, 92, 246, 0.15);
+  color: #a78bfa;
+  border: 1px solid rgba(139, 92, 246, 0.3);
+}
+
+.tag-stories {
+  background: rgba(245, 158, 11, 0.15);
+  color: #f59e0b;
+  border: 1px solid rgba(245, 158, 11, 0.3);
+}
+
+.tag-email {
+  background: rgba(14, 165, 233, 0.15);
+  color: #38bdf8;
+  border: 1px solid rgba(14, 165, 233, 0.3);
+}
+
+.tag-guide {
+  background: rgba(34, 197, 94, 0.15);
+  color: #22c55e;
+  border: 1px solid rgba(34, 197, 94, 0.3);
+}
+
+.tag-mistakes {
+  background: rgba(239, 68, 68, 0.15);
+  color: #ef4444;
+  border: 1px solid rgba(239, 68, 68, 0.3);
+}
+
+/* Title & Description */
+.card-title,
+.book-title {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--accent);
+  line-height: 1.45;
+  margin: 0;
+}
+
+.card-desc {
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  line-height: 1.55;
+  margin: 0;
+}
+
+/* Direct Action Button */
+.card-btn,
+.book-link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  min-height: 44px;
+  padding: 10px 18px;
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--on-accent-strong);
+  background: var(--accent-strong);
+  border: 1px solid transparent;
+  border-radius: 12px;
+  text-decoration: none;
+  cursor: pointer;
+  user-select: none;
+}
+
+.card-btn:focus-visible,
+.book-link:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+/* Follow & Social Box */
+.social-box {
+  background: var(--surface-card);
+  border: 1px solid var(--border-soft);
+  border-radius: 16px;
+  padding: 18px 16px;
+  text-align: center;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
+}
+
+.social-label {
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--text-secondary);
+  margin-bottom: 14px;
+}
+
+.social-btns {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.sbtn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 40px;
+  padding: 8px 18px;
+  font-size: 0.875rem;
+  font-weight: 600;
+  border-radius: var(--radius-pill);
+  text-decoration: none;
+  background: var(--btn-secondary-bg);
+  color: var(--text-primary);
+  border: 1px solid var(--border-soft);
+}
+
+.sbtn:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.sbtn-back {
+  background: var(--surface-high);
+  color: var(--accent);
+  border-color: var(--accent);
+  font-weight: 700;
+}
+
+/* ==============================================================================
+ * Floating Theme Toggle Button (Inherited from rami-dalati-org)
+ * ============================================================================== */
+#floating-utilities {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  left: auto;
+  direction: ltr !important;
+  z-index: 999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4px;
+  border-radius: var(--radius-pill);
+  background: rgba(20, 20, 20, 0.85);
+  border: 1px solid var(--border-soft);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+}
+
+[data-theme="light"] #floating-utilities {
+  background: rgba(255, 255, 255, 0.9);
+  border-color: rgba(45, 35, 30, 0.14);
+  box-shadow: 0 8px 24px rgba(45, 35, 30, 0.15);
+}
+
+[dir="rtl"] #floating-utilities {
+  right: 24px !important;
+  left: auto !important;
+  direction: ltr !important;
+}
+
+.theme-toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: var(--radius-pill);
+  background: transparent;
+  border: none;
+  color: var(--text-primary);
+  cursor: pointer;
+  padding: 0;
+  flex-shrink: 0;
+}
+
+.theme-toggle:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.theme-icon {
+  width: 20px;
+  height: 20px;
+}
+
+.theme-toggle .icon-moon {
+  display: none;
+}
+
+.theme-toggle .icon-sun {
+  display: block;
+}
+
+[data-theme="light"] .theme-toggle .icon-sun {
+  display: none;
+}
+
+[data-theme="light"] .theme-toggle .icon-moon {
+  display: block;
+}
+
+@media (max-width: 640px) {
+  #floating-utilities {
+    bottom: 16px;
+    right: 16px;
+  }
+
+  [dir="rtl"] #floating-utilities {
+    right: 16px !important;
+  }
+
+  .theme-toggle {
+    width: 36px;
+    height: 36px;
+  }
+}

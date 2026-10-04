@@ -1,0 +1,138 @@
+/**
+ * ==============================================================================
+ * Design Tokens & CSS Custom Properties (variables.css)
+ * ==============================================================================
+ *
+ * Inherited from rami-dalati-org design system.
+ * Centralized design tokens for Dark (default) and Light themes.
+ * Optimized for maximum loading speed and zero render blocking.
+ */
+
+@import "./theme.css";
+
+:root {
+  /* --------------------------------------------------------------------------
+   * 1. Layout & Shadow Tokens (Color system inherited from theme.css)
+   * --------------------------------------------------------------------------
+   */
+  /* Elevation drop shadow for cards in dark mode */
+  --shadow-card: 0 20px 40px rgba(0, 0, 0, 0.4);
+
+  /* --------------------------------------------------------------------------
+   * 2. Typography Tokens (Zero external network font dependencies)
+   * --------------------------------------------------------------------------
+   */
+  --font-main: "Cairo", "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --font-family-base: var(--font-main);
+  --font-family-heading: var(--font-main);
+
+  --fs-hero: 3rem;
+  --fs-body: 0.9375rem;
+  --fs-btn: 1rem;
+
+  --fw-hero: 800;
+  --fw-headline: 800;
+  --fw-body: 500;
+  --fw-btn: 700;
+
+  --lh-hero: 1.2;
+  --lh-body: 1.6;
+  --lh-btn: 1.5rem;
+
+  /* Font Size Scale */
+  --font-size-xs: 0.75rem;
+  --font-size-sm: 0.875rem;
+  --font-size-base: 1rem;
+  --font-size-md: 1.125rem;
+  --font-size-lg: 1.25rem;
+  --font-size-xl: 1.5rem;
+  --font-size-2xl: 1.875rem;
+  --font-size-3xl: 2.25rem;
+  --font-size-4xl: 2.75rem;
+
+  --line-height-tight: 1.2;
+  --line-height-normal: 1.5;
+  --line-height-relaxed: 1.65;
+  --line-height-loose: 1.8;
+
+  /* --------------------------------------------------------------------------
+   * 3. Radii, Spacing & Layout Tokens (Matching rami-dalati-org)
+   * --------------------------------------------------------------------------
+   */
+  --radius-xs: 4px;
+  --radius-sm: 0.25rem;
+  --radius-md: 12px;
+  --radius-lg: 18px;
+  --radius-card: 22px;
+  --radius-xl: 24px;
+  --radius-pill: 9999px;
+
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.25rem;
+  --space-6: 1.5rem;
+  --space-8: 2rem;
+  --space-10: 2.5rem;
+  --space-12: 3rem;
+  --space-16: 4rem;
+
+  --container: 1200px;
+  --container-max: 1200px;
+  --container-narrow: 1000px;
+  --container-padding: 1.5rem;
+  --gutter: 1.5rem;
+  --touch-min: 44px;
+
+  /* Transitions: set to none for maximum performance */
+  --transition-fast: none;
+  --transition-normal: none;
+  --transition-slow: none;
+
+  --header-height: 72px;
+  --z-header: 100;
+
+  /* --------------------------------------------------------------------------
+   * 4. Semantic Compatibility Aliases
+   * --------------------------------------------------------------------------
+   */
+  --color-primary: var(--accent-strong);
+  --color-primary-hover: var(--accent-strong);
+  --color-primary-light: var(--surface-high);
+  --color-primary-subtle: var(--bg-low);
+  --color-accent: var(--accent);
+  --color-bg-page: var(--bg-base);
+  --color-bg-surface: var(--surface-card);
+  --color-bg-subtle: var(--bg-low);
+  --color-bg-muted: var(--bg-lowest);
+  --color-text-main: var(--text-primary);
+  --color-text-secondary: var(--text-secondary);
+  --color-text-muted: var(--text-secondary);
+  --color-text-inverted: var(--on-accent-strong);
+  --color-border: var(--border-soft);
+  --color-border-subtle: var(--border-subtle);
+  --color-border-focus: var(--accent);
+  --shadow-sm: 0 2px 6px rgba(0, 0, 0, 0.2);
+  --shadow-md: 0 8px 16px rgba(0, 0, 0, 0.3);
+  --shadow-lg: 0 16px 32px rgba(0, 0, 0, 0.4);
+  --shadow-hover: var(--shadow-card);
+}
+
+/* ----------------------------------------------------------------------------
+ * 5. Light Theme Overrides (from rami-dalati-org)
+ * ----------------------------------------------------------------------------
+ */
+[data-theme="light"] {
+  /* Soft drop shadow for light backgrounds */
+  --shadow-card: 0 4px 12px rgba(0, 0, 0, 0.05), 0 1px 3px rgba(0, 0, 0, 0.03);
+
+  /* Semantic Compatibility Aliases in Light Theme */
+  --color-primary-light: #F3ECE6;
+  --color-primary-subtle: #F5EFEB;
+  --color-text-muted: #7c6f67;
+  --shadow-sm: 0 1px 3px rgba(45, 35, 30, 0.06);
+  --shadow-md: 0 4px 10px rgba(45, 35, 30, 0.08);
+  --shadow-lg: 0 10px 20px rgba(45, 35, 30, 0.1);
+  --shadow-hover: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
