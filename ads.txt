@@ -1,0 +1,4 @@
+# ads.txt - Authorized Digital Sellers
+# Domain: dalati.org
+# Integration: Ezoic Cloud Integration
+# Authorized seller records and reseller entries are managed dynamically by Ezoic Ad Transparency.
