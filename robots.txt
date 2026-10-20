@@ -1,4 +1,5 @@
 User-agent: *
 Allow: /
 Disallow: /*.json$
+Disallow: /english/pdf-reader.html
 Sitemap: https://dalati.org/sitemap.xml
