@@ -3,13 +3,10 @@ Allow: /
 Allow: /english/p/4img.html
 Allow: /english/p/podcast-list.html
 Allow: /english/p/series-list.html
+Allow: /english/p/books-list.html
+Allow: /english/p/cours-list.html
+Allow: /english/p/games-list.html
 Disallow: /english/p/
 Disallow: /*.json$
-Disallow: /english/pdf-reader.html
-Disallow: /english/games/quiz/quiz_pages/
-Disallow: /p/
-Disallow: /2026/
-Disallow: /2025/
-Disallow: /2021/
 
 Sitemap: https://dalati.org/sitemap.xml
