@@ -69,6 +69,12 @@ body.list-page {
   flex-shrink: 0;
 }
 
+[data-theme="light"] .list-header-icon-box {
+  background: var(--accent-strong);
+  border-color: var(--accent-strong);
+  box-shadow: 0 4px 16px rgba(184, 83, 24, 0.25);
+}
+
 .list-header-icon {
   width: 28px;
   height: 28px;
@@ -81,6 +87,10 @@ body.list-page {
   height: 28px;
   stroke: var(--accent);
   fill: none;
+}
+
+[data-theme="light"] .list-header-icon-box svg {
+  stroke: #ffffff;
 }
 
 .list-header-title,

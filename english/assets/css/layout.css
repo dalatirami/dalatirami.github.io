@@ -78,7 +78,7 @@
   border: 1px solid var(--border-soft);
   padding: 0.15rem 0.5rem;
   border-radius: var(--radius-pill);
-  text-
+  text-transform: uppercase;
   letter-spacing: 0.05em;
 }
 
@@ -314,9 +314,6 @@
   object-fit: cover;
 }
 
-.featured-card:hover .featured-image {
-}
-
 .featured-body {
   padding: var(--space-8);
   display: flex;
@@ -460,9 +457,6 @@
   object-fit: cover;
 }
 
-.article-card:hover .card-image {
-}
-
 .card-body {
   padding: var(--space-5);
   display: flex;
@@ -505,6 +499,7 @@
   flex: 1;
   display: -webkit-box;
   -webkit-line-clamp: 3;
+  line-clamp: 3;
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
@@ -733,7 +728,7 @@ body.article-page .site-header {
   font-size: var(--font-size-xs);
   font-weight: var(--fw-btn);
   letter-spacing: 0.05em;
-  text-
+  text-transform: uppercase;
 }
 
 .example-item.incorrect .example-label {
@@ -833,6 +828,267 @@ body.article-page .site-header {
   border-top: 1px solid var(--border-subtle);
   display: flex;
   justify-content: flex-start;
+}
+
+/* ----------------------------------------------------------------------------
+ * 9b. Reusable Article Sidebar & Two-Column Layout
+ * ----------------------------------------------------------------------------
+ */
+.article-layout-wrap {
+  width: 100%;
+  max-width: var(--container-max);
+  margin-left: auto;
+  margin-right: auto;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 330px;
+  gap: var(--space-8);
+  align-items: start;
+}
+
+.article-layout-wrap .article-container {
+  width: 100%;
+  max-width: 100%;
+  margin: 0;
+}
+
+.article-sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+  width: 100%;
+  min-width: 0;
+}
+
+.sidebar-widget {
+  background-color: var(--bg-article-content);
+  border: 1px solid var(--border-soft);
+  border-radius: var(--radius-card);
+  padding: var(--space-6);
+  box-shadow: var(--shadow-card);
+  color: var(--text-primary);
+  box-sizing: border-box;
+}
+
+.sidebar-widget-title {
+  font-size: 1.15rem;
+  font-weight: var(--fw-headline);
+  color: var(--accent);
+  margin-top: 0;
+  margin-bottom: var(--space-4);
+  line-height: var(--line-height-tight);
+}
+
+/* Widget A: About Dalati English */
+.sidebar-about-header {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  margin-bottom: var(--space-4);
+}
+
+.sidebar-author-img {
+  width: 64px;
+  height: 64px;
+  min-width: 64px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid var(--accent);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+  background-color: var(--surface-high);
+}
+
+.sidebar-about-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.sidebar-badge {
+  display: inline-block;
+  align-self: flex-start;
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  padding: 0.15rem 0.5rem;
+  border-radius: var(--radius-pill);
+  background-color: rgba(184, 83, 24, 0.15);
+  color: var(--accent);
+  border: 1px solid rgba(184, 83, 24, 0.3);
+}
+
+.sidebar-about-meta .sidebar-widget-title {
+  margin-bottom: 0;
+  font-size: 1.05rem;
+}
+
+.sidebar-about-desc {
+  font-size: 0.9rem;
+  line-height: 1.65;
+  color: var(--text-secondary);
+  margin-top: 0;
+  margin-bottom: var(--space-4);
+}
+
+.sidebar-about-link {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: var(--accent);
+  text-decoration: none;
+  border-bottom: 1px dashed var(--accent);
+  padding-bottom: 2px;
+  transition: color 0.15s ease, border-color 0.15s ease;
+}
+
+.sidebar-about-link:hover {
+  color: var(--text-primary);
+  border-bottom-style: solid;
+}
+
+/* Widget B: Recommended Articles */
+.sidebar-rec-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.sidebar-rec-item {
+  border-bottom: 1px solid var(--border-subtle);
+  padding-bottom: var(--space-3);
+}
+
+.sidebar-rec-item:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.sidebar-rec-link {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  text-decoration: none;
+  color: inherit;
+}
+
+.sidebar-rec-link:hover .sidebar-rec-title {
+  color: var(--accent);
+}
+
+.sidebar-rec-thumb-wrap {
+  flex-shrink: 0;
+  width: 76px;
+  height: 52px;
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  background-color: var(--surface-high);
+}
+
+.sidebar-rec-thumb {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.sidebar-rec-details {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  min-width: 0;
+}
+
+.sidebar-rec-category {
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--accent);
+  letter-spacing: 0.03em;
+}
+
+.sidebar-rec-title {
+  font-size: 0.85rem;
+  font-weight: 600;
+  line-height: 1.35;
+  color: var(--text-primary);
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  transition: color 0.15s ease;
+}
+
+.sidebar-rec-date {
+  font-size: 0.74rem;
+  color: var(--text-secondary);
+}
+
+/* Responsive sidebar behaviors */
+@media (max-width: 1023px) {
+  .article-layout-wrap {
+    grid-template-columns: 1fr;
+    gap: var(--space-6);
+    max-width: var(--container-narrow);
+  }
+
+  .article-layout-wrap .article-container {
+    margin-bottom: var(--space-4);
+  }
+
+  .article-sidebar {
+    gap: var(--space-5);
+  }
+
+  .sidebar-widget {
+    border-radius: var(--radius-lg);
+    padding: var(--space-5);
+  }
+}
+
+@media (min-width: 640px) and (max-width: 1023px) {
+  .article-sidebar {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-5);
+  }
+}
+
+@media (max-width: 639px) {
+  .sidebar-widget {
+    padding: var(--space-4);
+  }
+
+  .sidebar-rec-thumb-wrap {
+    width: 68px;
+    height: 48px;
+  }
+
+  .sidebar-rec-title {
+    font-size: 0.82rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .sidebar-widget {
+    border-radius: var(--radius-md);
+    padding: var(--space-4) var(--space-3);
+  }
+
+  .sidebar-about-header {
+    gap: var(--space-3);
+  }
+
+  .sidebar-author-img {
+    width: 54px;
+    height: 54px;
+    min-width: 54px;
+  }
 }
 
 /* Graceful Not Found State */
