@@ -6,6 +6,7 @@ Allow: /english/p/series-list.html
 Allow: /english/p/books-list.html
 Allow: /english/p/cours-list.html
 Allow: /english/p/games-list.html
+Allow: /english/p/all-links.html
 Disallow: /english/p/
 Disallow: /*.json$
 
