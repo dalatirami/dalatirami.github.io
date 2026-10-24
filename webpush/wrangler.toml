@@ -1,0 +1,6 @@
+name = "dalati-webpush"
+main = "worker.js"
+compatibility_date = "2024-10-01"
+
+[vars]
+VAPID_SUBJECT = "mailto:info@dalati.org"

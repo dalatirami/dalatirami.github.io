@@ -1,0 +1,28 @@
+.gitgnore
+*.gitgnore
+
+
+
+# npx linkinator ./
+
+
+
+# node minify-inplace.mjs
+minify-inplace.mjs
+
+
+/english/z_post
+/english/exam
+/english/exam/assets/test
+/english/booksread/
+
+test.txt
+legacy-redirects-cloudflare.csv
+EOZIC_READINESS_AUDIT.md
+WEBPUSH_SETUP.md
+# Local secrets and credentials
+.env
+.env.*
+!.env.example
+.dev.vars
+.wrangler/

@@ -1,0 +1,60 @@
+-- ====================================================================
+-- Dalati English — Minimal Web Push Migration (/english/ only)
+-- Tables: webpush_subscriptions, webpush_notifications
+-- ====================================================================
+
+-- 1. Subscriptions table
+CREATE TABLE IF NOT EXISTS public.webpush_subscriptions (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    endpoint TEXT NOT NULL UNIQUE,
+    p256dh TEXT NOT NULL,
+    auth TEXT NOT NULL,
+    locale VARCHAR(10) DEFAULT 'en',
+    is_active BOOLEAN NOT NULL DEFAULT true,
+    created_at TIMESTAMPTZ NOT NULL DEFAULT now(),
+    updated_at TIMESTAMPTZ NOT NULL DEFAULT now(),
+    unsubscribed_at TIMESTAMPTZ
+);
+
+CREATE INDEX IF NOT EXISTS idx_webpush_sub_active ON public.webpush_subscriptions(is_active);
+CREATE INDEX IF NOT EXISTS idx_webpush_sub_endpoint ON public.webpush_subscriptions(endpoint);
+
+-- 2. Notification broadcast history
+CREATE TABLE IF NOT EXISTS public.webpush_notifications (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    title TEXT NOT NULL,
+    message TEXT NOT NULL,
+    url TEXT NOT NULL,
+    total_subscribers INTEGER NOT NULL DEFAULT 0,
+    sent_count INTEGER NOT NULL DEFAULT 0, -- Number of subscribers accepted by push service (HTTP 201 Created per RFC 8030)
+    unsubscribed_count INTEGER NOT NULL DEFAULT 0,
+    sent_at TIMESTAMPTZ DEFAULT now(),
+    created_at TIMESTAMPTZ NOT NULL DEFAULT now()
+);
+
+CREATE INDEX IF NOT EXISTS idx_webpush_notif_created ON public.webpush_notifications(created_at DESC);
+
+-- 3. Row Level Security (RLS)
+ALTER TABLE public.webpush_subscriptions ENABLE ROW LEVEL SECURITY;
+ALTER TABLE public.webpush_notifications ENABLE ROW LEVEL SECURITY;
+
+-- Deny public anon access entirely; allow Supabase service_role for Cloudflare Worker
+REVOKE ALL ON public.webpush_subscriptions FROM anon;
+REVOKE ALL ON public.webpush_notifications FROM anon;
+
+GRANT ALL ON public.webpush_subscriptions TO service_role;
+GRANT ALL ON public.webpush_notifications TO service_role;
+
+-- 4. Automatic updated_at trigger
+CREATE OR REPLACE FUNCTION public.set_webpush_updated_at()
+RETURNS TRIGGER AS $$
+BEGIN
+    NEW.updated_at = now();
+    RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+DROP TRIGGER IF EXISTS trg_webpush_sub_updated_at ON public.webpush_subscriptions;
+CREATE TRIGGER trg_webpush_sub_updated_at
+BEFORE UPDATE ON public.webpush_subscriptions
+FOR EACH ROW EXECUTE FUNCTION public.set_webpush_updated_at();
