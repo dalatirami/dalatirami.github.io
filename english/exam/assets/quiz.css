@@ -322,3 +322,69 @@
     animation: none;
   }
 }
+
+
+/* Required terms and privacy consent before starting an official exam */
+.terms-consent {
+  width: 100%;
+  margin: 16px 0 12px;
+  padding: 12px 14px;
+  border: 1px solid var(--border-soft);
+  border-radius: 12px;
+  background: var(--surface-high);
+  text-align: start;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+}
+.terms-consent-label {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  color: var(--text-primary);
+  font-size: 0.875rem;
+  font-weight: 600;
+  line-height: 1.75;
+  cursor: pointer;
+}
+.terms-consent-label input[type="checkbox"] {
+  width: 19px;
+  height: 19px;
+  min-width: 19px;
+  margin: 4px 0 0;
+  accent-color: var(--accent-strong);
+  cursor: pointer;
+}
+.terms-consent-label a {
+  color: var(--accent-strong);
+  font-weight: 800;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.terms-consent-error {
+  margin: 8px 0 0;
+  color: var(--color-wrong);
+  font-size: 0.8rem;
+  font-weight: 700;
+  line-height: 1.6;
+}
+.terms-consent-error[hidden] {
+  display: none;
+}
+.terms-consent.is-invalid {
+  border-color: var(--color-wrong);
+  background: rgba(220, 38, 38, 0.06);
+  box-shadow: 0 0 0 2px rgba(220, 38, 38, 0.12);
+}
+#start-btn.consent-required {
+  background: var(--surface-high) !important;
+  color: var(--text-secondary) !important;
+  border-color: var(--border-soft) !important;
+  box-shadow: none !important;
+  cursor: not-allowed;
+  opacity: 0.72;
+}
+.terms-consent-label input[type="checkbox"]:focus-visible,
+.terms-consent-label a:focus-visible {
+  outline: 2px solid var(--accent-strong);
+  outline-offset: 3px;
+  border-radius: 3px;
+}
