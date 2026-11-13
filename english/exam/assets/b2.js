@@ -71,8 +71,8 @@ allowHTML:false
 });
 }catch(choiceError){
 this.choicesInstance=null;
-const partialContainer=select.parentElement&&select.parentElement.querySelector(".choices");
-if(partialContainer)partialContainer.remove();
+const partialContainer=select.closest?select.closest(".choices"):null;
+if(partialContainer&&partialContainer!==select){const partialParent=partialContainer.parentElement;if(partialParent)partialParent.insertBefore(select,partialContainer);partialContainer.remove();}
 select.classList.remove("choices__input");
 select.removeAttribute("hidden");
 select.removeAttribute("aria-hidden");
