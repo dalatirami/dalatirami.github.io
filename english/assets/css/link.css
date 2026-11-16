@@ -37,8 +37,8 @@ nav[aria-label="قنوات التواصل الاجتماعي"] .link-icon{
 /* Stacked labels for profile and advertising links */
 .link-title-stacked{display:block;line-height:1.4}
 .link-title-stacked .title-line{display:block;width:100%;line-height:1.4}
-.link-title-stacked br{display:block;content:"";margin-top:5px}
-.link-title-stacked .title-subtitle{display:block;margin-top:5px;font-size:.82em;font-weight:600;line-height:1.4;opacity:.9}
+.link-title-stacked br{display:none}
+.link-title-stacked .title-subtitle{display:block;margin-top:2px;font-size:.82em;font-weight:600;line-height:1.4;opacity:.9}
 
 /* Make the certificate announcement stand out clearly */
 .link-card.certificate-coming{
