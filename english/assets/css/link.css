@@ -14,3 +14,21 @@ nav[aria-label="قنوات التواصل الاجتماعي"] .link-item:nth-ch
 nav[aria-label="قنوات التواصل الاجتماعي"] .link-item:nth-child(5) .link-card{background:#493044;border-color:#744d69;color:#f9eaf5}
 nav[aria-label="قنوات التواصل الاجتماعي"] .link-item:nth-child(6) .link-card{background:#263b54;border-color:#456486;color:#eaf2fc}
 nav[aria-label="قنوات التواصل الاجتماعي"] .link-item:nth-child(7) .link-card{background:#3d354c;border-color:#625477;color:#f1edfc}
+
+/* Lightweight mobile-first visual refinements */
+.profile-avatar{
+  border:2px solid transparent;
+  background:linear-gradient(var(--surface-high),var(--surface-high)) padding-box,linear-gradient(135deg,#d97745 0%,#80516f 52%,#d97745 100%) border-box;
+  box-shadow:0 5px 18px rgba(0,0,0,.32),0 0 0 3px rgba(217,119,69,.08);
+}
+.section-eyebrow::before,.section-eyebrow::after{
+  background:linear-gradient(90deg,transparent,rgba(217,119,69,.48),rgba(128,81,111,.42));
+}
+nav[aria-label="قنوات التواصل الاجتماعي"] .link-icon{
+  width:28px;
+  height:28px;
+  padding:5px;
+  border-radius:8px;
+  background:rgba(255,255,255,.09);
+  border:1px solid rgba(255,255,255,.08);
+}
