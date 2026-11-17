@@ -90,3 +90,8 @@ nav[aria-label="قنوات التواصل الاجتماعي"] .link-icon{
 .link-card.certificate-coming:active{
   transform:scale(.985);
 }
+
+
+/* Ensure the certificate link receives taps on mobile and desktop */
+.link-card.certificate-coming{position:relative;z-index:2;pointer-events:auto;cursor:pointer}
+.link-card.certificate-coming::before,.link-card.certificate-coming::after{display:none;pointer-events:none}
