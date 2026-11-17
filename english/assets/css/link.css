@@ -69,3 +69,24 @@ nav[aria-label="قنوات التواصل الاجتماعي"] .link-icon{
   font-size:.74rem;
   font-weight:900;
 }
+
+/* Active and prominent certificate link */
+.link-card.certificate-coming{
+  pointer-events:auto;
+  cursor:pointer;
+  text-decoration:none;
+  background:linear-gradient(110deg,#572052 0%,#873653 52%,#c45b32 100%);
+  border:2px solid #f1b46f;
+  box-shadow:0 0 0 3px rgba(241,180,111,.2),0 9px 28px rgba(217,119,69,.38),inset 0 1px 0 rgba(255,255,255,.25);
+}
+.link-card.certificate-coming .link-status{
+  background:#ffe0a8;
+  border:1px solid #fff0cf;
+  color:#4b2035;
+  font-weight:900;
+  padding:5px 11px;
+  box-shadow:0 2px 9px rgba(0,0,0,.18);
+}
+.link-card.certificate-coming:active{
+  transform:scale(.985);
+}
