@@ -90,3 +90,19 @@ nav[aria-label="قنوات التواصل الاجتماعي"] .link-icon{
 .link-card.certificate-coming:active{
   transform:scale(.985);
 }
+
+/* Separate certificate feature from the regular resource list */
+.certificate-feature{
+  width:100%;
+  margin:2px 0 24px;
+  padding:10px;
+  border:1px solid rgba(241,180,111,.3);
+  border-radius:22px;
+  background:linear-gradient(145deg,rgba(217,119,69,.09),rgba(128,81,111,.12));
+  box-shadow:0 8px 24px rgba(0,0,0,.16);
+}
+.certificate-feature .links-list{gap:0}
+.certificate-feature .link-card.certificate-coming{
+  min-height:76px;
+  border-radius:15px;
+}
