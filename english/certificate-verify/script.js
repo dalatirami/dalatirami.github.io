@@ -218,9 +218,19 @@ document.addEventListener("DOMContentLoaded", function () {
           `https://gitlab.com/dalatirami/dalatienglish/-/raw/main/Certificate/${encodeURIComponent(candidate)}.pdf`;
 
         try {
-          const response = await fetch(pdfUrl, { method: "HEAD" });
-          if (response.ok) {
+          // Use GET with a one-byte range instead of HEAD.
+          // Some GitLab raw endpoints do not handle HEAD reliably.
+          const response = await fetch(pdfUrl, {
+            method: "GET",
+            headers: { Range: "bytes=0-0" },
+            cache: "no-store"
+          });
+
+          if (response.ok || response.status === 206) {
             verifiedCode = candidate;
+            if (response.body) {
+              response.body.cancel().catch(() => {});
+            }
             break;
           }
         } catch (error) {}
