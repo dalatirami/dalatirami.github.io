@@ -18,7 +18,7 @@ const translations = {
     shareWhatsapp: "WhatsApp",
     shareLinkedIn: "LinkedIn",
     addToLinkedIn: "Add to LinkedIn Profile",
-    shareText: "I verified my certificate from Dalati English! My Code is:",
+    shareText: "I’m pleased to share that I earned my English certificate from Dalati English. You can view and verify it using the link below.",
     footerText: "© 2026 Dalati English - All Rights Reserved"
   },
   ar: {
@@ -40,7 +40,7 @@ const translations = {
     shareWhatsapp: "واتساب",
     shareLinkedIn: "LinkedIn",
     addToLinkedIn: "إضافة إلى الملف الشخصي في LinkedIn",
-    shareText: "لقد قمت بالتحقق من شهادتي من Dalati English! كود الشهادة الخاص بي هو:",
+    shareText: "يسعدني أن أشارك حصولي على شهادة في اللغة الإنجليزية من Dalati English بعد اجتياز الاختبار بنجاح. يمكنكم الاطلاع على الشهادة والتحقق منها عبر الرابط المرفق.",
     footerText: "© 2026 Dalati English - جميع الحقوق محفوظة"
   }
 };
@@ -161,6 +161,36 @@ document.addEventListener("DOMContentLoaded", function () {
     linkedInProfileButton = document.getElementById("linkedin-profile-add");
   }
 
+  // On supported phones, use the native share sheet so LinkedIn can be selected
+  // as the destination app and receive both the caption and certificate URL.
+  linkedInShareButton.addEventListener("click", async function (event) {
+    event.preventDefault();
+
+    const certificateId = linkedInShareButton.dataset.certificateId;
+    if (!certificateId) return;
+
+    const certificatePage = `${CERTIFICATE_WORKER_URL}/${encodeURIComponent(certificateId)}`;
+    const shareData = {
+      title: currentLang === "ar" ? "شهادة Dalati English" : "Dalati English Certificate",
+      text: buildShareMessage(certificateId),
+      url: certificatePage
+    };
+
+    if (typeof navigator.share === "function" &&
+        (!navigator.canShare || navigator.canShare(shareData))) {
+      try {
+        await navigator.share(shareData);
+      } catch (error) {
+        if (error && error.name !== "AbortError") {
+          window.open(linkedInShareButton.href, "_blank", "noopener,noreferrer");
+        }
+      }
+      return;
+    }
+
+    window.open(linkedInShareButton.href, "_blank", "noopener,noreferrer");
+  });
+
   try {
     const savedLanguage = localStorage.getItem("dalati-cert-lang");
     if (savedLanguage === "ar" || savedLanguage === "en") {
@@ -204,9 +234,27 @@ document.addEventListener("DOMContentLoaded", function () {
     loader.style.display = isLoading ? "block" : "none";
   }
 
+  function buildShareMessage(certificateId) {
+    const code = certificateId.toUpperCase();
+    const levelMatch = code.match(/^(A1|A2|B1|B2)(?![A-Z0-9])/);
+    const level = levelMatch ? levelMatch[1] : null;
+
+    if (currentLang === "ar") {
+      if (level) {
+        return `يسعدني أن أشارك حصولي على شهادة إتمام اختبار اللغة الإنجليزية – المستوى ${level} من Dalati English، بعد اجتياز الاختبار بنجاح. خطوة جديدة في رحلتي نحو إتقان اللغة الإنجليزية! يمكنكم الاطلاع على الشهادة والتحقق منها عبر الرابط المرفق.`;
+      }
+      return "يسعدني أن أشارك حصولي على شهادة من Dalati English بعد اجتياز الاختبار بنجاح. خطوة جديدة في رحلتي التعليمية! يمكنكم الاطلاع على الشهادة والتحقق منها عبر الرابط المرفق.";
+    }
+
+    if (level) {
+      return `I’m pleased to share that I have earned the Dalati English Certificate – English Test Level ${level}, after successfully passing the test. Another step forward in my English-learning journey! View and verify my certificate using the link below.`;
+    }
+    return "I’m pleased to share that I have earned a certificate from Dalati English after successfully passing the test. Another step forward in my learning journey! View and verify my certificate using the link below.";
+  }
+
   function updateShareLinks(certificateId) {
     const certificatePage = `${CERTIFICATE_WORKER_URL}/${encodeURIComponent(certificateId)}`;
-    const shareMessage = `${translations[currentLang].shareText} ${certificateId}`;
+    const shareMessage = buildShareMessage(certificateId);
     const encodedPage = encodeURIComponent(certificatePage);
     const encodedMessage = encodeURIComponent(shareMessage);
 
@@ -216,8 +264,10 @@ document.addEventListener("DOMContentLoaded", function () {
     whatsappShare.href =
       `https://wa.me/?text=${encodedMessage}%0A${encodedPage}`;
 
+    // Fallback for browsers without the native share sheet.
     linkedInShareButton.href =
       `https://www.linkedin.com/sharing/share-offsite/?url=${encodedPage}`;
+    linkedInShareButton.dataset.certificateId = certificateId;
 
     const profileParams = new URLSearchParams({
       startTask: "CERTIFICATION_NAME",
