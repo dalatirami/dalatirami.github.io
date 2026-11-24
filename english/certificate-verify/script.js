@@ -256,11 +256,7 @@ document.addEventListener("DOMContentLoaded", function () {
       displayArea.style.display = "block";
     } catch (error) {
       console.error("Certificate verification failed:", error);
-      if (typeof navigator === "undefined" || navigator.onLine) {
-        showError(labels.errorNotFound);
-      } else {
-        showError(labels.errorConnection);
-      }
+      showError(labels.errorConnection);
     } finally {
       setLoading(false);
     }
