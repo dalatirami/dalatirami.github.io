@@ -203,47 +203,35 @@ document.addEventListener("DOMContentLoaded", function () {
 
     setLoading(true);
 
-    const possibleCodes = [...new Set([
-      enteredCode,
-      enteredCode.toUpperCase(),
-      enteredCode.toLowerCase()
-    ])];
-
     let verifiedCode = null;
 
     try {
-      // Keep the existing GitLab PDF lookup as the certificate verification check.
-      for (const candidate of possibleCodes) {
-        const pdfUrl =
-          `https://gitlab.com/dalatirami/dalatienglish/-/raw/main/Certificate/${encodeURIComponent(candidate)}.pdf`;
+      // Verify through the same-origin Cloudflare Worker, not directly from the browser to GitLab.
+      const verifyUrl =
+        `${CERTIFICATE_WORKER_URL}/verify/${encodeURIComponent(enteredCode)}`;
 
-        try {
-          // Use GET with a one-byte range instead of HEAD.
-          // Some GitLab raw endpoints do not handle HEAD reliably.
-          const response = await fetch(pdfUrl, {
-            method: "GET",
-            headers: { Range: "bytes=0-0" },
-            cache: "no-store"
-          });
+      const response = await fetch(verifyUrl, {
+        method: "GET",
+        cache: "no-store"
+      });
 
-          if (response.ok || response.status === 206) {
-            verifiedCode = candidate;
-            if (response.body) {
-              response.body.cancel().catch(() => {});
-            }
-            break;
-          }
-        } catch (error) {}
-      }
-
-      if (!verifiedCode) {
-        if (typeof navigator === "undefined" || navigator.onLine) {
-          showError(labels.errorNotFound);
-        } else {
-          showError(labels.errorConnection);
-        }
+      if (response.status === 404) {
+        showError(labels.errorNotFound);
         return;
       }
+
+      if (!response.ok) {
+        throw new Error(`Certificate verification service returned ${response.status}`);
+      }
+
+      const result = await response.json();
+
+      if (!result.exists || !result.certificateId) {
+        showError(labels.errorNotFound);
+        return;
+      }
+
+      verifiedCode = result.certificateId;
 
       const imageUrl =
         `${CERTIFICATE_WORKER_URL}/image/${encodeURIComponent(verifiedCode)}.jpg`;
