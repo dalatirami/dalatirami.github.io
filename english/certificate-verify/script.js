@@ -9,7 +9,9 @@ const translations = {
     loadingPreview: "Certificate found! Loading image preview, please wait...",
     errorPreview: "Certificate verified, but the image preview could not be loaded.",
     successFound: "Verification Successful! Certificate available.",
-    downloadBtn: "Download Certificate",
+    downloadBtn: "Download Original Certificate (PDF)",
+    imageDownloadBtn: "Download Image to Share on Social Media",
+    profilePrompt: "Add this certificate to your LinkedIn profile to strengthen your professional profile.",
     langBtn: "English",
     shareLabel: "Share your certificate via",
     shareFacebook: "Facebook",
@@ -29,7 +31,9 @@ const translations = {
     loadingPreview: "تم العثور على الشهادة! جاري تحميل صورة المعاينة، يرجى الانتظار...",
     errorPreview: "تم التحقق من الشهادة، لكن تعذر تحميل صورة المعاينة.",
     successFound: "تم التحقق بنجاح! الشهادة متوفرة.",
-    downloadBtn: "تحميل الشهادة",
+    downloadBtn: "تحميل الشهادة الأصلية (PDF)",
+    imageDownloadBtn: "تحميل الصورة لمشاركتها على مواقع التواصل",
+    profilePrompt: "أضف هذه الشهادة إلى ملفك الشخصي على LinkedIn لتعزيز ملفك المهني وإبراز إنجازاتك.",
     langBtn: "العربية",
     shareLabel: "شارك شهادتك عبر",
     shareFacebook: "فيسبوك",
@@ -45,6 +49,7 @@ const CERTIFICATE_WORKER_URL = "https://dalati.org/english/certificate";
 let currentLang = "ar";
 let linkedInShareButton;
 let linkedInProfileButton;
+let imageDownloadLink;
 
 function toggleLanguage() {
   currentLang = currentLang === "en" ? "ar" : "en";
@@ -67,6 +72,7 @@ function updateContent() {
     ["widget-title", "widgetTitle"],
     ["verify-btn", "verifyBtn"],
     ["download-link", "downloadBtn"],
+    ["image-download-link", "imageDownloadBtn"],
     ["share-label-text", "shareLabel"],
     ["facebook-share", "shareFacebook"],
     ["whatsapp-share", "shareWhatsapp"],
@@ -80,6 +86,8 @@ function updateContent() {
 
   if (linkedInShareButton) linkedInShareButton.textContent = labels.shareLinkedIn;
   if (linkedInProfileButton) linkedInProfileButton.textContent = labels.addToLinkedIn;
+  const profilePrompt = document.getElementById("linkedin-profile-prompt");
+  if (profilePrompt) profilePrompt.textContent = labels.profilePrompt;
 
   const footer = document.getElementById("footer-text");
   if (footer) footer.textContent = labels.footerText;
@@ -99,13 +107,14 @@ document.addEventListener("DOMContentLoaded", function () {
   const displayArea = document.getElementById("cert-display-area");
   const preview = document.getElementById("cert-preview");
   const downloadLink = document.getElementById("download-link");
+  imageDownloadLink = document.getElementById("image-download-link");
   const languageButton = document.getElementById("lang-btn");
   const facebookShare = document.getElementById("facebook-share");
   const whatsappShare = document.getElementById("whatsapp-share");
   const shareContainer = document.querySelector(".share-buttons-container");
 
   if (!codeInput || !verifyButton || !statusMessage || !loader ||
-      !displayArea || !preview || !downloadLink || !languageButton ||
+      !displayArea || !preview || !downloadLink || !imageDownloadLink || !languageButton ||
       !facebookShare || !whatsappShare || !shareContainer) {
     console.error("Certificate verifier: required page elements are missing.");
     return;
@@ -125,8 +134,18 @@ document.addEventListener("DOMContentLoaded", function () {
     shareContainer.appendChild(linkedInShareButton);
   }
 
-  linkedInProfileButton = document.getElementById("linkedin-profile-add");
-  if (!linkedInProfileButton) {
+  // Keep the LinkedIn profile action visually separate and below the sharing buttons.
+  let profileSection = document.getElementById("linkedin-profile-section");
+  if (!profileSection) {
+    profileSection = document.createElement("div");
+    profileSection.id = "linkedin-profile-section";
+    profileSection.className = "linkedin-profile-section";
+
+    const profilePrompt = document.createElement("p");
+    profilePrompt.id = "linkedin-profile-prompt";
+    profilePrompt.className = "linkedin-profile-prompt";
+    profilePrompt.textContent = translations[currentLang].profilePrompt;
+
     linkedInProfileButton = document.createElement("a");
     linkedInProfileButton.id = "linkedin-profile-add";
     linkedInProfileButton.className = "share-btn linkedin-profile";
@@ -135,7 +154,11 @@ document.addEventListener("DOMContentLoaded", function () {
     linkedInProfileButton.rel = "noopener noreferrer";
     linkedInProfileButton.style.backgroundColor = "#0A66C2";
     linkedInProfileButton.textContent = translations[currentLang].addToLinkedIn;
-    shareContainer.appendChild(linkedInProfileButton);
+
+    profileSection.append(profilePrompt, linkedInProfileButton);
+    shareContainer.insertAdjacentElement("afterend", profileSection);
+  } else {
+    linkedInProfileButton = document.getElementById("linkedin-profile-add");
   }
 
   try {
@@ -262,6 +285,8 @@ document.addEventListener("DOMContentLoaded", function () {
         `${CERTIFICATE_WORKER_URL}/image/${encodeURIComponent(verifiedCode)}.jpg`;
       const downloadUrl =
         `${CERTIFICATE_WORKER_URL}/download/${encodeURIComponent(verifiedCode)}.pdf`;
+      const imageDownloadUrl =
+        `${CERTIFICATE_WORKER_URL}/image/${encodeURIComponent(verifiedCode)}.jpg`;
 
       showStatus("loading", labels.loadingPreview);
 
@@ -275,7 +300,10 @@ document.addEventListener("DOMContentLoaded", function () {
 
       preview.src = imageUrl;
       downloadLink.href = downloadUrl;
+      downloadLink.download = `${verifiedCode}.pdf`;
       downloadLink.removeAttribute("target");
+      imageDownloadLink.href = imageDownloadUrl;
+      imageDownloadLink.download = `${verifiedCode}.jpg`;
 
       updateShareLinks(verifiedCode);
       displayArea.style.display = "block";
