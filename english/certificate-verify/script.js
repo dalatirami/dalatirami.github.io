@@ -15,6 +15,7 @@ const translations = {
     shareFacebook: "Facebook",
     shareWhatsapp: "WhatsApp",
     shareLinkedIn: "LinkedIn",
+    addToLinkedIn: "Add to LinkedIn Profile",
     shareText: "I verified my certificate from Dalati English! My Code is:",
     footerText: "© 2026 Dalati English - All Rights Reserved"
   },
@@ -34,14 +35,16 @@ const translations = {
     shareFacebook: "فيسبوك",
     shareWhatsapp: "واتساب",
     shareLinkedIn: "LinkedIn",
+    addToLinkedIn: "إضافة إلى الملف الشخصي في LinkedIn",
     shareText: "لقد قمت بالتحقق من شهادتي من Dalati English! كود الشهادة الخاص بي هو:",
     footerText: "© 2026 Dalati English - جميع الحقوق محفوظة"
   }
 };
 
 const CERTIFICATE_WORKER_URL = "https://dalati.org/english/certificate";
-let currentLang = "en";
+let currentLang = "ar";
 let linkedInShareButton;
+let linkedInProfileButton;
 
 function toggleLanguage() {
   currentLang = currentLang === "en" ? "ar" : "en";
@@ -75,9 +78,8 @@ function updateContent() {
     if (element) element.textContent = labels[key];
   });
 
-  if (linkedInShareButton) {
-    linkedInShareButton.textContent = labels.shareLinkedIn;
-  }
+  if (linkedInShareButton) linkedInShareButton.textContent = labels.shareLinkedIn;
+  if (linkedInProfileButton) linkedInProfileButton.textContent = labels.addToLinkedIn;
 
   const footer = document.getElementById("footer-text");
   if (footer) footer.textContent = labels.footerText;
@@ -109,7 +111,7 @@ document.addEventListener("DOMContentLoaded", function () {
     return;
   }
 
-  // Add the LinkedIn button without changing the existing page markup.
+  // Add LinkedIn sharing and profile buttons without changing the existing page markup.
   linkedInShareButton = document.getElementById("linkedin-share");
   if (!linkedInShareButton) {
     linkedInShareButton = document.createElement("a");
@@ -121,6 +123,19 @@ document.addEventListener("DOMContentLoaded", function () {
     linkedInShareButton.style.backgroundColor = "#0A66C2";
     linkedInShareButton.textContent = translations[currentLang].shareLinkedIn;
     shareContainer.appendChild(linkedInShareButton);
+  }
+
+  linkedInProfileButton = document.getElementById("linkedin-profile-add");
+  if (!linkedInProfileButton) {
+    linkedInProfileButton = document.createElement("a");
+    linkedInProfileButton.id = "linkedin-profile-add";
+    linkedInProfileButton.className = "share-btn linkedin-profile";
+    linkedInProfileButton.href = "#";
+    linkedInProfileButton.target = "_blank";
+    linkedInProfileButton.rel = "noopener noreferrer";
+    linkedInProfileButton.style.backgroundColor = "#0A66C2";
+    linkedInProfileButton.textContent = translations[currentLang].addToLinkedIn;
+    shareContainer.appendChild(linkedInProfileButton);
   }
 
   try {
@@ -180,6 +195,16 @@ document.addEventListener("DOMContentLoaded", function () {
 
     linkedInShareButton.href =
       `https://www.linkedin.com/sharing/share-offsite/?url=${encodedPage}`;
+
+    const profileParams = new URLSearchParams({
+      startTask: "CERTIFICATION_NAME",
+      name: "Dalati English Certificate",
+      organizationName: "Dalati English",
+      certId: certificateId,
+      certUrl: certificatePage
+    });
+    linkedInProfileButton.href =
+      `https://www.linkedin.com/profile/add?${profileParams.toString()}`;
   }
 
   async function verifyCertificate() {
