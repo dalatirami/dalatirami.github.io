@@ -243,13 +243,13 @@ document.addEventListener("DOMContentLoaded", function () {
       if (level) {
         return `يسعدني أن أشارك حصولي على شهادة إتمام اختبار اللغة الإنجليزية – المستوى ${level} من Dalati English، بعد اجتياز الاختبار بنجاح. خطوة جديدة في رحلتي نحو إتقان اللغة الإنجليزية! يمكنكم الاطلاع على الشهادة والتحقق منها عبر الرابط المرفق.`;
       }
-      return "يسعدني أن أشارك حصولي على شهادة من Dalati English بعد اجتياز الاختبار بنجاح. خطوة جديدة في رحلتي التعليمية! يمكنكم الاطلاع على الشهادة والتحقق منها عبر الرابط المرفق.";
+      return "يسعدني أن أشارك حصولي على شهادة من Dalati English، وأعتز بهذه التجربة وبما أضافته إلى مسيرتي. يمكنكم الاطلاع على الشهادة عبر الرابط المرفق.";
     }
 
     if (level) {
       return `I’m pleased to share that I have earned the Dalati English Certificate – English Test Level ${level}, after successfully passing the test. Another step forward in my English-learning journey! View and verify my certificate using the link below.`;
     }
-    return "I’m pleased to share that I have earned a certificate from Dalati English after successfully passing the test. Another step forward in my learning journey! View and verify my certificate using the link below.";
+    return "I’m pleased to share that I have received a certificate from Dalati English. I value this experience and what it has added to my journey. You can view the certificate using the link below.";
   }
 
   function updateShareLinks(certificateId) {
