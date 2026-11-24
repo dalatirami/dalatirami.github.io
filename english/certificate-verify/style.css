@@ -39,9 +39,11 @@ body #floating-utilities * {
   margin: 0;
 }
 .image-download-btn {
-  background-color: var(--btn-secondary-bg, var(--surface-card));
-  color: var(--text-primary) !important;
-  border: 1px solid var(--border-soft);
+  background-color: var(--surface-card);
+  color: var(--accent-color) !important;
+  border: 1.5px solid var(--accent-color);
+  box-shadow: inset 0 0 0 1px rgba(217, 119, 69, 0.08);
+  font-weight: 700;
 }
 .linkedin-profile-section {
   margin: 22px auto 0;
