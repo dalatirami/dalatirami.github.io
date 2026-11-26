@@ -19,8 +19,8 @@ document.addEventListener("DOMContentLoaded",function(){
     const key=nextExpanded?"projects_show_less":"projects_show_more";
     label.setAttribute("data-i18n",key);
     const language=document.documentElement.lang==="ar"?"ar":"en";
-    if(window.translations&&window.translations[language]&&window.translations[language][key]){
-      label.textContent=window.translations[language][key];
+    if(typeof translations!=="undefined"&&translations[language]&&translations[language][key]){
+      label.textContent=translations[language][key];
     }
     if(nextExpanded&&extraCards[0]){
       extraCards[0].scrollIntoView({behavior:"smooth",block:"nearest"});
