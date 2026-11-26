@@ -49,10 +49,11 @@
   }
   </script>
   <style>
+    .password-main.wrap { padding-left: 0; padding-right: 0; }
     .password-layout {
-      width: min(100%, 760px);
+      width: min(100%, 680px);
       margin: 0 auto;
-      padding: 22px 18px 24px;
+      padding: 22px 14px 26px;
     }
     .generator-card { padding: 22px; }
     .intro { color: var(--muted); font-size: 13.5px; line-height: 1.65; margin: -4px 0 20px; }
@@ -86,7 +87,29 @@
     .password-display input::selection { background: color-mix(in srgb, var(--accent) 25%, transparent); }
     .password-actions { display: flex; gap: 7px; flex-shrink: 0; }
     .password-actions .btn { min-height: 42px; display: inline-flex; justify-content: center; align-items: center; gap: 7px; }
-    .password-actions svg, .generate-btn svg { width: 17px; height: 17px; flex-shrink: 0; }
+    .password-actions svg, .generate-btn svg, .copy-bottom svg { width: 17px; height: 17px; flex-shrink: 0; }
+    .copy-bottom {
+      width: 100%;
+      min-height: 47px;
+      margin-top: 9px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 9px;
+      border: 1px solid var(--accent);
+      background: color-mix(in srgb, var(--accent) 7%, var(--card));
+      color: var(--accent);
+    }
+    .copy-bottom:hover:not(:disabled) {
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      border-color: transparent;
+      color: #fff;
+    }
+    .copy-bottom.copied {
+      border-color: #26966b;
+      background: color-mix(in srgb, #26966b 9%, var(--card));
+      color: #26966b;
+    }
     .strength-block { margin: 15px 1px 24px; }
     .strength-heading { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 8px; font-size: 12.5px; }
     .strength-heading span { color: var(--muted); }
@@ -167,20 +190,43 @@
     .generate-btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; }
     .notice { min-height: 19px; margin: 12px 0 0; color: var(--muted); text-align: center; font-size: 11.5px; line-height: 1.5; }
     .footer .footer-link { color: var(--text); }
+    .brand h1 { line-height: 1.25; }
+    .password-display input[type="text"] { direction: ltr; text-align: left; overflow: hidden; text-overflow: clip; white-space: nowrap; }
     button:focus-visible, input:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
     @media (max-width: 560px) {
-      .password-layout { padding: 16px 14px 22px; }
-      .generator-card { padding: 16px; }
-      .password-display { gap: 5px; padding: 7px; }
+      .password-layout { padding: 14px 14px 22px; }
+      .generator-card { padding: 17px 15px; border-radius: 14px; }
+      .topbar-inner { padding: 12px 14px; }
+      .brand { gap: 9px; }
+      .brand .logo-mark { width: 36px; height: 36px; }
+      .brand h1 { font-size: clamp(16px, 4.8vw, 20px); letter-spacing: 0; }
+      .brand p { font-size: 11.5px; }
+      .intro { font-size: 12.5px; line-height: 1.55; margin-bottom: 17px; }
+      .password-display { min-height: 59px; gap: 5px; padding: 6px 7px 6px 10px; }
+      .password-display input[type="text"] { font-size: clamp(13px, 3.7vw, 17px); padding: 9px 2px; }
       .password-actions { gap: 5px; }
-      .password-actions .btn { padding: 9px 10px; }
-      .option { gap: 8px; padding: 9px; }
+      .password-actions .btn { width: 39px; min-width: 39px; min-height: 39px; padding: 8px; }
+      #copyBtn .copy-label { display: none; }
+      .copy-bottom { min-height: 46px; margin-top: 8px; }
+      .strength-block { margin: 14px 1px 22px; }
+      .options-grid { gap: 8px; }
+      .option { min-height: 55px; gap: 7px; padding: 8px; }
       .option-copy strong { font-size: 11px; }
       .option-copy small { font-size: 10px; }
+      .action-row { grid-template-columns: minmax(0, 1fr) 78px; gap: 8px; margin-top: 18px; }
+      .action-row .btn { min-height: 46px; padding: 10px 9px; font-size: 12.5px; }
+      .generate-btn { gap: 6px; }
+      .notice { font-size: 11px; }
+      .footer { font-size: 11.5px; padding-bottom: 24px; }
     }
     @media (max-width: 360px) {
-      .options-grid { grid-template-columns: 1fr; }
-      .copy-label { display: none; }
+      .password-layout { padding-left: 11px; padding-right: 11px; }
+      .generator-card { padding: 15px 12px; }
+      .options-grid { grid-template-columns: 1fr 1fr; }
+      .option-copy strong { font-size: 10.5px; }
+      .option-copy small { font-size: 9.5px; }
+      .action-row { grid-template-columns: minmax(0, 1fr) 72px; }
+      .generate-btn { font-size: 11.5px !important; }
     }
     @media (prefers-reduced-motion: reduce) {
       *, *::before, *::after { scroll-behavior: auto !important; transition-duration: .01ms !important; }
@@ -207,7 +253,7 @@
     </div>
   </header>
 
-  <main class="wrap">
+  <main class="wrap password-main">
     <div class="password-layout">
       <section class="card generator-card" aria-labelledby="generatorTitle">
         <h2 id="generatorTitle">Create a strong password</h2>
@@ -227,6 +273,10 @@
               </button>
             </div>
           </div>
+          <button class="btn copy-bottom" id="copyBtnBottom" type="button">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="8" y="8" width="12" height="12" rx="2"></rect><path d="M16 8V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h3"></path></svg>
+            <span class="copy-label">Copy</span>
+          </button>
         </div>
 
         <div class="strength-block" aria-live="polite">
@@ -294,8 +344,8 @@
       const strengthLabel = $("strengthLabel");
       const strengthBar = $("strengthBar");
       const notice = $("notice");
-      const copyBtn = $("copyBtn");
-      const copyLabel = $("copyLabel");
+      const copyButtons = [$("copyBtn"), $("copyBtnBottom")];
+      const copyLabels = Array.from(document.querySelectorAll(".copy-label"));
 
       // Keep the theme preference consistent with Dalati QR Tools.
       const root = document.documentElement;
@@ -375,8 +425,8 @@
       }
 
       function resetCopyState() {
-        copyLabel.textContent = "Copy";
-        copyBtn.classList.remove("copied");
+        copyLabels.forEach((label) => { label.textContent = "Copy"; });
+        copyButtons.forEach((button) => button.classList.remove("copied"));
       }
 
       function generatePassword() {
@@ -428,8 +478,8 @@
             if (!copied) throw new Error("Copy failed");
           }
 
-          copyLabel.textContent = "Copied";
-          copyBtn.classList.add("copied");
+          copyLabels.forEach((label) => { label.textContent = "Copied"; });
+          copyButtons.forEach((button) => button.classList.add("copied"));
           setNotice("Password copied to clipboard.", false);
           window.setTimeout(resetCopyState, 1600);
         } catch (_) {
@@ -444,7 +494,7 @@
       groups.forEach((group) => $(group.id).addEventListener("change", generatePassword));
       $("generateBtn").addEventListener("click", generatePassword);
       $("refreshBtn").addEventListener("click", generatePassword);
-      copyBtn.addEventListener("click", copyPassword);
+      copyButtons.forEach((button) => button.addEventListener("click", copyPassword));
       $("clearBtn").addEventListener("click", () => {
         passwordField.value = "";
         strengthBar.style.width = "0%";
