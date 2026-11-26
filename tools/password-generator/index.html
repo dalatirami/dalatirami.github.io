@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#ffffff" />
+  <meta name="description" content="Generate strong, secure passwords directly in your browser. Free, fast, and private." />
+  <title>Password Generator</title>
+  <style>
+:root {
+  color-scheme: light;
+  --bg: #ffffff;
+  --surface: #ffffff;
+  --surface-soft: #faf8fa;
+  --line: #e9e3e8;
+  --text: #32152F;
+  --muted: #817781;
+  --accent: #32152F;
+  --accent-2: #D97745;
+  --danger: #c74747;
+  --shadow: 0 12px 38px rgba(50, 21, 47, .07);
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  min-height: 100vh;
+  padding: 38px 16px;
+  display: grid;
+  place-items: center;
+  color: var(--text);
+  background: var(--bg);
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+button, input { font: inherit; }
+button { cursor: pointer; }
+.app { width: min(100%, 590px); }
+.brand {
+  display: flex; justify-content: center; align-items: center; gap: 10px;
+  margin-bottom: 22px; color: var(--text); font-size: 14px; font-weight: 800;
+  letter-spacing: -.02em;
+}
+.brand-mark {
+  width: 30px; height: 30px; display: grid; place-items: center;
+  border-radius: 9px; background: var(--accent); color: #fff; font-size: 17px;
+}
+.card {
+  overflow: hidden; border: 1px solid var(--line); border-radius: 20px;
+  background: var(--surface); box-shadow: var(--shadow);
+}
+.header { padding: 34px 34px 25px; text-align: center; }
+.eyebrow {
+  display: inline-flex; align-items: center; gap: 7px; margin-bottom: 13px;
+  padding: 7px 11px; border: 1px solid #f1d8cb; border-radius: 999px;
+  background: #fff8f4; color: var(--accent-2); font-size: 11px;
+  font-weight: 750; letter-spacing: .04em;
+}
+h1 { margin: 0; color: var(--text); font-size: clamp(27px, 6vw, 37px); letter-spacing: -.045em; }
+.subtitle { max-width: 410px; margin: 11px auto 0; color: var(--muted); font-size: 14px; line-height: 1.7; }
+.content { padding: 0 28px 29px; }
+.password-box {
+  display: flex; align-items: center; gap: 10px; min-height: 76px;
+  padding: 12px 13px 12px 18px; border: 1px solid #dfd3dd;
+  border-radius: 13px; background: var(--surface-soft);
+}
+#password {
+  width: 100%; min-width: 0; border: 0; outline: 0; background: transparent;
+  color: var(--text); font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: clamp(16px, 3.5vw, 21px); font-weight: 650; letter-spacing: .025em;
+  text-overflow: ellipsis;
+}
+#password::selection { background: #eadde8; }
+.icon-btn {
+  flex: 0 0 43px; width: 43px; height: 43px; display: grid; place-items: center;
+  border: 1px solid var(--line); border-radius: 11px; background: #fff;
+  color: var(--accent); transition: .2s ease;
+}
+.icon-btn:hover { border-color: var(--accent-2); background: #fff8f4; }
+.icon-btn svg { width: 19px; height: 19px; }
+.strength { margin: 15px 2px 25px; }
+.strength-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 9px; font-size: 12px; }
+.strength-top span:first-child { color: var(--muted); }
+#strengthLabel { color: #27865f; font-weight: 750; }
+.strength-track { height: 6px; overflow: hidden; border-radius: 99px; background: #eee9ed; }
+#strengthBar { width: 0; height: 100%; border-radius: inherit; background: #27865f; transition: width .25s ease, background .25s ease; }
+.section-title { display: flex; justify-content: space-between; align-items: center; margin: 0 0 14px; color: var(--text); font-size: 13px; font-weight: 750; }
+#lengthValue { color: var(--accent-2); font-variant-numeric: tabular-nums; }
+.range-wrap { padding: 0 2px 20px; }
+input[type="range"] {
+  width: 100%; height: 6px; margin: 0; appearance: none; border-radius: 99px;
+  outline: none; background: linear-gradient(to right, var(--accent) 0%, var(--accent) 30%, #eee9ed 30%, #eee9ed 100%);
+}
+input[type="range"]::-webkit-slider-thumb {
+  width: 18px; height: 18px; appearance: none; border: 3px solid #fff;
+  border-radius: 50%; background: var(--accent-2); box-shadow: 0 1px 5px rgba(50,21,47,.25);
+}
+input[type="range"]::-moz-range-thumb {
+  width: 13px; height: 13px; border: 3px solid #fff; border-radius: 50%;
+  background: var(--accent-2);
+}
+.range-labels { display: flex; justify-content: space-between; margin-top: 10px; color: #a49aa3; font-size: 11px; }
+.options { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.option {
+  min-height: 59px; display: flex; align-items: center; gap: 11px;
+  padding: 11px 12px; border: 1px solid var(--line); border-radius: 12px;
+  background: #fff; cursor: pointer; transition: .2s ease;
+}
+.option:hover { border-color: #d9c3d4; background: #fdfafd; }
+.option:has(input:checked) { border-color: #d9c3d4; background: #faf6f9; }
+.option input { position: absolute; opacity: 0; pointer-events: none; }
+.check {
+  width: 19px; height: 19px; flex: 0 0 19px; display: grid; place-items: center;
+  border: 1px solid #cfc5ce; border-radius: 5px; color: transparent; transition: .2s ease;
+}
+.option input:checked + .check { border-color: var(--accent); background: var(--accent); color: white; }
+.option input:focus-visible + .check { outline: 3px solid rgba(217,119,69,.25); outline-offset: 2px; }
+.check svg { width: 13px; height: 13px; }
+.option-text { display: flex; flex-direction: column; gap: 3px; }
+.option-text strong { color: var(--text); font-size: 12px; font-weight: 700; }
+.option-text small { color: var(--muted); font-size: 10px; }
+.action-row { display: grid; grid-template-columns: 1fr auto; gap: 10px; margin-top: 23px; }
+.generate {
+  min-height: 52px; display: flex; justify-content: center; align-items: center; gap: 9px;
+  border: 0; border-radius: 11px; background: var(--accent); color: #fff;
+  font-size: 14px; font-weight: 800; transition: .2s ease;
+}
+.generate:hover { background: #4a2446; }
+.generate:active { transform: translateY(1px); }
+.generate svg { width: 18px; height: 18px; }
+.copy-btn {
+  min-width: 112px; padding: 0 15px; border: 1px solid #edc9b7;
+  border-radius: 11px; background: #fff8f4; color: #b65f35;
+  font-size: 13px; font-weight: 750; transition: .2s ease;
+}
+.copy-btn:hover { background: #fff0e8; }
+.copy-btn.copied { border-color: #9bcbb5; color: #27865f; background: #f2faf6; }
+.notice { min-height: 18px; margin: 12px 0 0; color: var(--muted); text-align: center; font-size: 11px; line-height: 1.5; }
+.footer {
+  display: flex; align-items: center; justify-content: center; gap: 7px;
+  margin: 18px 0 0; color: #938993; font-size: 11px;
+}
+.footer svg { width: 13px; height: 13px; color: var(--accent-2); }
+button:focus-visible, input:focus-visible { outline: 3px solid rgba(217,119,69,.28); outline-offset: 3px; }
+@media (max-width: 480px) {
+  body { padding: 25px 13px; }
+  .header { padding: 28px 20px 22px; }
+  .content { padding: 0 17px 22px; }
+  .options { gap: 8px; }
+  .option { padding: 10px 9px; gap: 8px; }
+  .option-text strong { font-size: 11px; }
+  .option-text small { font-size: 9px; }
+  .copy-btn { min-width: 94px; padding: 0 10px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { scroll-behavior: auto !important; transition-duration: .01ms !important; }
+}
+</style>
+</head>
+<body>
+  <main class="app">
+    <div class="brand"><span class="brand-mark" aria-hidden="true">✳</span> Dalati Tools</div>
+    <section class="card" aria-labelledby="pageTitle">
+      <header class="header">
+        <div class="eyebrow"><span aria-hidden="true">●</span> Secure &amp; Free</div>
+        <h1 id="pageTitle">Password Generator</h1>
+        <p class="subtitle">Create a strong password in seconds. Your passwords are generated locally and never leave your device.</p>
+      </header>
+
+      <div class="content">
+        <div class="password-box">
+          <input id="password" type="text" value="" readonly aria-label="Generated password" spellcheck="false" autocomplete="off" />
+          <button class="icon-btn" id="refreshBtn" type="button" aria-label="Generate a new password" title="Generate again">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 7v5h-5"/><path d="M4.9 9a7.5 7.5 0 0 1 12.4-2L20 12M4 17v-5h5"/><path d="M19.1 15a7.5 7.5 0 0 1-12.4 2L4 12"/></svg>
+          </button>
+        </div>
+
+        <div class="strength" aria-live="polite">
+          <div class="strength-top"><span>Password strength</span><strong id="strengthLabel">Very strong</strong></div>
+          <div class="strength-track"><div id="strengthBar"></div></div>
+        </div>
+
+        <div class="section-title"><label for="length">Password length</label><span id="lengthValue">18 characters</span></div>
+        <div class="range-wrap">
+          <input id="length" type="range" min="8" max="64" value="18" />
+          <div class="range-labels"><span>8</span><span>32</span><span>64</span></div>
+        </div>
+
+        <div class="section-title">Character types</div>
+        <div class="options">
+          <label class="option">
+            <input type="checkbox" id="uppercase" checked />
+            <span class="check"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 8 3.2 3.2L13 4.5"/></svg></span>
+            <span class="option-text"><strong>Uppercase letters</strong><small>A–Z</small></span>
+          </label>
+          <label class="option">
+            <input type="checkbox" id="lowercase" checked />
+            <span class="check"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 8 3.2 3.2L13 4.5"/></svg></span>
+            <span class="option-text"><strong>Lowercase letters</strong><small>a–z</small></span>
+          </label>
+          <label class="option">
+            <input type="checkbox" id="numbers" checked />
+            <span class="check"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 8 3.2 3.2L13 4.5"/></svg></span>
+            <span class="option-text"><strong>Numbers</strong><small>0–9</small></span>
+          </label>
+          <label class="option">
+            <input type="checkbox" id="symbols" checked />
+            <span class="check"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 8 3.2 3.2L13 4.5"/></svg></span>
+            <span class="option-text"><strong>Symbols</strong><small>! @ # $ % &amp; *</small></span>
+          </label>
+        </div>
+
+        <div class="action-row">
+          <button class="generate" id="generateBtn" type="button">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v3m0 12v3M3 12h3m12 0h3M5.64 5.64l2.12 2.12m8.48 8.48 2.12 2.12m0-12.72-2.12 2.12m-8.48 8.48-2.12 2.12"/><circle cx="12" cy="12" r="4"/></svg>
+            Generate password
+          </button>
+          <button class="copy-btn" id="copyBtn" type="button">Copy</button>
+        </div>
+        <p class="notice" id="notice" role="status" aria-live="polite">Your password is generated locally in your browser.</p>
+      </div>
+    </section>
+    <p class="footer">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="10" width="16" height="11" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg>
+      No storage · No transmission · 100% local
+    </p>
+  </main>
+
+  <script>
+    (() => {
+      'use strict';
+      const $ = (id) => document.getElementById(id);
+      const passwordField = $('password');
+      const lengthInput = $('length');
+      const lengthValue = $('lengthValue');
+      const strengthLabel = $('strengthLabel');
+      const strengthBar = $('strengthBar');
+      const notice = $('notice');
+      const copyBtn = $('copyBtn');
+
+      const groups = [
+        { id: 'uppercase', chars: 'ABCDEFGHIJKLMNOPQRSTUVWXYZ' },
+        { id: 'lowercase', chars: 'abcdefghijklmnopqrstuvwxyz' },
+        { id: 'numbers', chars: '0123456789' },
+        { id: 'symbols', chars: '!@#$%^&*()_+-=[]{};:,.?' }
+      ];
+
+      // Rejection sampling avoids modulo bias when mapping secure random bytes.
+      function secureIndex(max) {
+        if (!Number.isSafeInteger(max) || max < 1 || max > 256) throw new Error('Invalid character set.');
+        const limit = Math.floor(256 / max) * max;
+        const byte = new Uint8Array(1);
+        do { crypto.getRandomValues(byte); } while (byte[0] >= limit);
+        return byte[0] % max;
+      }
+
+      function shuffle(array) {
+        for (let i = array.length - 1; i > 0; i--) {
+          const j = secureIndex(i + 1);
+          [array[i], array[j]] = [array[j], array[i]];
+        }
+        return array;
+      }
+
+      function getSelectedGroups() {
+        return groups.filter(group => $(group.id).checked);
+      }
+
+      function updateRange() {
+        const value = Number(lengthInput.value);
+        lengthValue.textContent = `${value} Zeichen`;
+        const percent = ((value - Number(lengthInput.min)) / (Number(lengthInput.max) - Number(lengthInput.min))) * 100;
+        lengthInput.style.background = `linear-gradient(to right, var(--accent) 0%, var(--accent) ${percent}%, rgba(255,255,255,.12) ${percent}%, rgba(255,255,255,.12) 100%)`;
+      }
+
+      function updateStrength(password, selectedGroups) {
+        const length = password.length;
+        const poolSize = selectedGroups.reduce((sum, group) => sum + group.chars.length, 0);
+        const entropy = length * Math.log2(Math.max(poolSize, 1));
+        let score = entropy < 35 ? 20 : entropy < 55 ? 45 : entropy < 75 ? 70 : entropy < 100 ? 88 : 100;
+        if (length < 12) score = Math.min(score, 45);
+        let label = 'Weak';
+        let color = '#ff6d86';
+        if (score >= 88) { label = 'Very strong'; color = '#5de0c1'; }
+        else if (score >= 70) { label = 'Strong'; color = '#8edb9b'; }
+        else if (score >= 45) { label = 'Fair'; color = '#f0bd69'; }
+        strengthLabel.textContent = label;
+        strengthLabel.style.color = color;
+        strengthBar.style.width = `${score}%`;
+        strengthBar.style.background = color;
+      }
+
+      function generatePassword() {
+        const selected = getSelectedGroups();
+        if (selected.length === 0) {
+          notice.textContent = 'Please select at least one character type.';
+          notice.style.color = 'var(--danger)';
+          passwordField.value = '';
+          strengthBar.style.width = '0%';
+          strengthLabel.textContent = '–';
+          return;
+        }
+        if (!globalThis.crypto || typeof crypto.getRandomValues !== 'function') {
+          notice.textContent = 'Your browser does not support secure random number generation.';
+          notice.style.color = 'var(--danger)';
+          return;
+        }
+
+        const length = Number(lengthInput.value);
+        const allChars = selected.map(group => group.chars).join('');
+        // Include at least one character from every selected group, then shuffle securely.
+        const result = selected.map(group => group.chars[secureIndex(group.chars.length)]);
+        while (result.length < length) result.push(allChars[secureIndex(allChars.length)]);
+        passwordField.value = shuffle(result).join('');
+        updateStrength(passwordField.value, selected);
+        notice.textContent = 'Your password was securely generated in your browser.';
+        notice.style.color = 'var(--muted)';
+        copyBtn.textContent = 'Copy';
+        copyBtn.classList.remove('copied');
+      }
+
+      async function copyPassword() {
+        const value = passwordField.value;
+        if (!value) {
+          notice.textContent = 'Generate a password first.';
+          return;
+        }
+        try {
+          if (navigator.clipboard && window.isSecureContext) {
+            await navigator.clipboard.writeText(value);
+          } else {
+            passwordField.focus();
+            passwordField.select();
+            const copied = document.execCommand('copy');
+            passwordField.setSelectionRange(0, 0);
+            if (!copied) throw new Error('Copy failed');
+          }
+          copyBtn.textContent = 'Copied ✓';
+          copyBtn.classList.add('copied');
+          notice.textContent = 'Password copied to clipboard.';
+          notice.style.color = 'var(--accent-2)';
+        } catch (error) {
+          notice.textContent = 'Copy failed. Bitte markiere das Passwort und kopiere es manuell.';
+          notice.style.color = 'var(--danger)';
+        }
+      }
+
+      lengthInput.addEventListener('input', () => { updateRange(); generatePassword(); });
+      groups.forEach(group => $(group.id).addEventListener('change', generatePassword));
+      $('generateBtn').addEventListener('click', generatePassword);
+      $('refreshBtn').addEventListener('click', generatePassword);
+      copyBtn.addEventListener('click', copyPassword);
+
+      updateRange();
+      generatePassword();
+    })();
+  </script>
+</body>
+</html>
