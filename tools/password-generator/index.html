@@ -49,10 +49,17 @@
   }
   </script>
   <style>
-    .password-main.wrap { padding-left: 0; padding-right: 0; }
+    .password-main.wrap {
+      width: 100%;
+      padding-left: 0;
+      padding-right: 0;
+      display: flex;
+      justify-content: center;
+    }
     .password-layout {
-      width: min(100%, 680px);
-      margin: 0 auto;
+      width: 100%;
+      max-width: 680px;
+      margin-inline: auto;
       padding: 22px 14px 26px;
     }
     .generator-card { padding: 22px; }
@@ -194,7 +201,7 @@
     .password-display input[type="text"] { direction: ltr; text-align: left; overflow: hidden; text-overflow: clip; white-space: nowrap; }
     button:focus-visible, input:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
     @media (max-width: 560px) {
-      .password-layout { padding: 14px 14px 22px; }
+      .password-layout { padding: 20px 14px 22px; }
       .generator-card { padding: 17px 15px; border-radius: 14px; }
       .topbar-inner { padding: 12px 14px; }
       .brand { gap: 9px; }
