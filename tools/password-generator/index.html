@@ -1,251 +1,331 @@
-<!DOCTYPE html>
-<html lang="en">
+<!doctype html>
+<html lang="en" data-theme="light">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="theme-color" content="#ffffff" />
-  <meta name="description" content="Generate strong, secure passwords directly in your browser. Free, fast, and private." />
-  <title>Password Generator</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#fdf6f0">
+  <meta name="color-scheme" content="light dark">
+  <meta name="title" content="Free Password Generator | Secure & Private – Dalati">
+  <meta name="description" content="Create strong, random passwords with Dalati Password Generator. Customize length and character types. Free, private, and generated securely in your browser.">
+  <meta name="keywords" content="password generator, secure password generator, strong password, random password generator, free password generator, private password tool, Dalati">
+  <meta name="author" content="Rami Dalati">
+  <meta name="robots" content="index, follow, max-image-preview:large">
+  <meta property="og:site_name" content="Dalati Tools">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://dalati.org/tools/password-generator/">
+  <meta property="og:title" content="Free Password Generator | Secure & Private – Dalati">
+  <meta property="og:description" content="Generate strong, random passwords instantly. Customize password length and character types. Free, private, and processed locally in your browser.">
+  <meta property="og:image" content="https://dalati.org/tools/password-generator/logo.webp">
+  <meta property="og:image:alt" content="Dalati Password Generator security logo">
+  <meta property="og:image:type" content="image/webp">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Free Password Generator | Secure & Private – Dalati">
+  <meta name="twitter:description" content="Generate strong, random passwords instantly in your browser. Free, private, and easy to use.">
+  <meta name="twitter:image" content="https://dalati.org/tools/password-generator/logo.webp">
+  <link rel="canonical" href="https://dalati.org/tools/password-generator/">
+  <link rel="icon" href="logo.webp" type="image/webp">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap">
+  <link rel="stylesheet" href="../../qrcode/styles.css">
+  <title>Free Password Generator | Secure &amp; Private – Dalati</title>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Dalati Password Generator",
+    "url": "https://dalati.org/tools/password-generator/",
+    "description": "A free browser-based password generator for creating strong random passwords with customizable length and character types.",
+    "applicationCategory": "UtilitiesApplication",
+    "operatingSystem": "Any",
+    "isAccessibleForFree": true,
+    "browserRequirements": "Requires a modern browser with the Web Crypto API.",
+    "creator": {
+      "@type": "Person",
+      "name": "Rami Dalati",
+      "url": "https://rami.dalati.org/"
+    },
+    "image": "https://dalati.org/tools/password-generator/logo.webp"
+  }
+  </script>
   <style>
-:root {
-  color-scheme: light;
-  --bg: #ffffff;
-  --surface: #ffffff;
-  --surface-soft: #faf8fa;
-  --line: #e9e3e8;
-  --text: #32152F;
-  --muted: #817781;
-  --accent: #32152F;
-  --accent-2: #D97745;
-  --danger: #c74747;
-  --shadow: 0 12px 38px rgba(50, 21, 47, .07);
-}
-* { box-sizing: border-box; }
-body {
-  margin: 0;
-  min-height: 100vh;
-  padding: 38px 16px;
-  display: grid;
-  place-items: center;
-  color: var(--text);
-  background: var(--bg);
-  font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-}
-button, input { font: inherit; }
-button { cursor: pointer; }
-.app { width: min(100%, 590px); }
-.brand {
-  display: flex; justify-content: center; align-items: center; gap: 10px;
-  margin-bottom: 22px; color: var(--text); font-size: 14px; font-weight: 800;
-  letter-spacing: -.02em;
-}
-.brand-mark {
-  width: 30px; height: 30px; display: grid; place-items: center;
-  border-radius: 9px; background: var(--accent); color: #fff; font-size: 17px;
-}
-.card {
-  overflow: hidden; border: 1px solid var(--line); border-radius: 20px;
-  background: var(--surface); box-shadow: var(--shadow);
-}
-.header { padding: 34px 34px 25px; text-align: center; }
-.eyebrow {
-  display: inline-flex; align-items: center; gap: 7px; margin-bottom: 13px;
-  padding: 7px 11px; border: 1px solid #f1d8cb; border-radius: 999px;
-  background: #fff8f4; color: var(--accent-2); font-size: 11px;
-  font-weight: 750; letter-spacing: .04em;
-}
-h1 { margin: 0; color: var(--text); font-size: clamp(27px, 6vw, 37px); letter-spacing: -.045em; }
-.subtitle { max-width: 410px; margin: 11px auto 0; color: var(--muted); font-size: 14px; line-height: 1.7; }
-.content { padding: 0 28px 29px; }
-.password-box {
-  display: flex; align-items: center; gap: 10px; min-height: 76px;
-  padding: 12px 13px 12px 18px; border: 1px solid #dfd3dd;
-  border-radius: 13px; background: var(--surface-soft);
-}
-#password {
-  width: 100%; min-width: 0; border: 0; outline: 0; background: transparent;
-  color: var(--text); font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
-  font-size: clamp(16px, 3.5vw, 21px); font-weight: 650; letter-spacing: .025em;
-  text-overflow: ellipsis;
-}
-#password::selection { background: #eadde8; }
-.icon-btn {
-  flex: 0 0 43px; width: 43px; height: 43px; display: grid; place-items: center;
-  border: 1px solid var(--line); border-radius: 11px; background: #fff;
-  color: var(--accent); transition: .2s ease;
-}
-.icon-btn:hover { border-color: var(--accent-2); background: #fff8f4; }
-.icon-btn svg { width: 19px; height: 19px; }
-.strength { margin: 15px 2px 25px; }
-.strength-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 9px; font-size: 12px; }
-.strength-top span:first-child { color: var(--muted); }
-#strengthLabel { color: #27865f; font-weight: 750; }
-.strength-track { height: 6px; overflow: hidden; border-radius: 99px; background: #eee9ed; }
-#strengthBar { width: 0; height: 100%; border-radius: inherit; background: #27865f; transition: width .25s ease, background .25s ease; }
-.section-title { display: flex; justify-content: space-between; align-items: center; margin: 0 0 14px; color: var(--text); font-size: 13px; font-weight: 750; }
-#lengthValue { color: var(--accent-2); font-variant-numeric: tabular-nums; }
-.range-wrap { padding: 0 2px 20px; }
-input[type="range"] {
-  width: 100%; height: 6px; margin: 0; appearance: none; border-radius: 99px;
-  outline: none; background: linear-gradient(to right, var(--accent) 0%, var(--accent) 30%, #eee9ed 30%, #eee9ed 100%);
-}
-input[type="range"]::-webkit-slider-thumb {
-  width: 18px; height: 18px; appearance: none; border: 3px solid #fff;
-  border-radius: 50%; background: var(--accent-2); box-shadow: 0 1px 5px rgba(50,21,47,.25);
-}
-input[type="range"]::-moz-range-thumb {
-  width: 13px; height: 13px; border: 3px solid #fff; border-radius: 50%;
-  background: var(--accent-2);
-}
-.range-labels { display: flex; justify-content: space-between; margin-top: 10px; color: #a49aa3; font-size: 11px; }
-.options { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-.option {
-  min-height: 59px; display: flex; align-items: center; gap: 11px;
-  padding: 11px 12px; border: 1px solid var(--line); border-radius: 12px;
-  background: #fff; cursor: pointer; transition: .2s ease;
-}
-.option:hover { border-color: #d9c3d4; background: #fdfafd; }
-.option:has(input:checked) { border-color: #d9c3d4; background: #faf6f9; }
-.option input { position: absolute; opacity: 0; pointer-events: none; }
-.check {
-  width: 19px; height: 19px; flex: 0 0 19px; display: grid; place-items: center;
-  border: 1px solid #cfc5ce; border-radius: 5px; color: transparent; transition: .2s ease;
-}
-.option input:checked + .check { border-color: var(--accent); background: var(--accent); color: white; }
-.option input:focus-visible + .check { outline: 3px solid rgba(217,119,69,.25); outline-offset: 2px; }
-.check svg { width: 13px; height: 13px; }
-.option-text { display: flex; flex-direction: column; gap: 3px; }
-.option-text strong { color: var(--text); font-size: 12px; font-weight: 700; }
-.option-text small { color: var(--muted); font-size: 10px; }
-.action-row { display: grid; grid-template-columns: 1fr auto; gap: 10px; margin-top: 23px; }
-.generate {
-  min-height: 52px; display: flex; justify-content: center; align-items: center; gap: 9px;
-  border: 0; border-radius: 11px; background: var(--accent); color: #fff;
-  font-size: 14px; font-weight: 800; transition: .2s ease;
-}
-.generate:hover { background: #4a2446; }
-.generate:active { transform: translateY(1px); }
-.generate svg { width: 18px; height: 18px; }
-.copy-btn {
-  min-width: 112px; padding: 0 15px; border: 1px solid #edc9b7;
-  border-radius: 11px; background: #fff8f4; color: #b65f35;
-  font-size: 13px; font-weight: 750; transition: .2s ease;
-}
-.copy-btn:hover { background: #fff0e8; }
-.copy-btn.copied { border-color: #9bcbb5; color: #27865f; background: #f2faf6; }
-.notice { min-height: 18px; margin: 12px 0 0; color: var(--muted); text-align: center; font-size: 11px; line-height: 1.5; }
-.footer {
-  display: flex; align-items: center; justify-content: center; gap: 7px;
-  margin: 18px 0 0; color: #938993; font-size: 11px;
-}
-.footer svg { width: 13px; height: 13px; color: var(--accent-2); }
-button:focus-visible, input:focus-visible { outline: 3px solid rgba(217,119,69,.28); outline-offset: 3px; }
-@media (max-width: 480px) {
-  body { padding: 25px 13px; }
-  .header { padding: 28px 20px 22px; }
-  .content { padding: 0 17px 22px; }
-  .options { gap: 8px; }
-  .option { padding: 10px 9px; gap: 8px; }
-  .option-text strong { font-size: 11px; }
-  .option-text small { font-size: 9px; }
-  .copy-btn { min-width: 94px; padding: 0 10px; }
-}
-@media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after { scroll-behavior: auto !important; transition-duration: .01ms !important; }
-}
-</style>
+    .password-layout {
+      width: min(100%, 760px);
+      margin: 0 auto;
+      padding: 22px 18px 24px;
+    }
+    .generator-card { padding: 22px; }
+    .intro { color: var(--muted); font-size: 13.5px; line-height: 1.65; margin: -4px 0 20px; }
+    .password-display {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      min-height: 66px;
+      padding: 8px 9px 8px 13px;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      background: var(--input);
+    }
+    .password-display input[type="text"] {
+      flex: 1;
+      width: 100%;
+      min-width: 0;
+      padding: 10px 5px;
+      border: 0;
+      border-radius: 7px;
+      outline: 0;
+      background: transparent;
+      box-shadow: none;
+      color: var(--text);
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: clamp(15px, 3.2vw, 20px);
+      font-weight: 700;
+      letter-spacing: .025em;
+    }
+    .password-display input[type="text"]:focus { border: 0; box-shadow: none; }
+    .password-display input::selection { background: color-mix(in srgb, var(--accent) 25%, transparent); }
+    .password-actions { display: flex; gap: 7px; flex-shrink: 0; }
+    .password-actions .btn { min-height: 42px; display: inline-flex; justify-content: center; align-items: center; gap: 7px; }
+    .password-actions svg, .generate-btn svg { width: 17px; height: 17px; flex-shrink: 0; }
+    .strength-block { margin: 15px 1px 24px; }
+    .strength-heading { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 8px; font-size: 12.5px; }
+    .strength-heading span { color: var(--muted); }
+    #strengthLabel { font-weight: 700; color: #26966b; }
+    .strength-track { height: 6px; overflow: hidden; border-radius: 99px; background: var(--border); }
+    #strengthBar { width: 0; height: 100%; border-radius: inherit; background: #26966b; transition: width .25s ease, background .25s ease; }
+    .control-heading { display: flex; justify-content: space-between; align-items: center; gap: 10px; margin: 0 0 11px; }
+    .control-heading .label { margin: 0; }
+    #lengthValue { color: var(--accent); font-size: 13px; font-weight: 800; font-variant-numeric: tabular-nums; }
+    .range-wrap { padding: 3px 2px 22px; }
+    #length {
+      display: block;
+      width: 100%;
+      height: 6px;
+      margin: 0;
+      padding: 0;
+      appearance: none;
+      border: 0;
+      border-radius: 99px;
+      outline: 0;
+      background: var(--border);
+      cursor: pointer;
+    }
+    #length::-webkit-slider-thumb {
+      width: 18px;
+      height: 18px;
+      appearance: none;
+      border: 3px solid var(--card);
+      border-radius: 50%;
+      background: var(--accent2);
+      box-shadow: 0 1px 5px #0002;
+    }
+    #length::-moz-range-thumb {
+      width: 13px;
+      height: 13px;
+      border: 3px solid var(--card);
+      border-radius: 50%;
+      background: var(--accent2);
+      box-shadow: 0 1px 5px #0002;
+    }
+    .range-labels { display: flex; justify-content: space-between; margin-top: 10px; color: var(--muted); font-size: 11px; }
+    .options-heading { margin: 0 0 10px; }
+    .options-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+    .option {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      min-height: 58px;
+      padding: 10px 12px;
+      border: 1px solid var(--border);
+      border-radius: 11px;
+      background: var(--input);
+      cursor: pointer;
+      transition: border-color .18s, background .18s;
+    }
+    .option:hover { border-color: var(--accent); }
+    .option:has(input:checked) { border-color: color-mix(in srgb, var(--accent) 55%, var(--border)); }
+    .option input { position: absolute; width: 1px; height: 1px; opacity: 0; }
+    .checkmark {
+      display: grid;
+      place-items: center;
+      width: 19px;
+      height: 19px;
+      flex: 0 0 19px;
+      border: 1px solid var(--muted);
+      border-radius: 5px;
+      color: transparent;
+      transition: background .18s, border-color .18s;
+    }
+    .option input:checked + .checkmark { border-color: var(--accent); background: var(--accent); color: #fff; }
+    .option input:focus-visible + .checkmark { outline: 3px solid color-mix(in srgb, var(--accent) 30%, transparent); outline-offset: 2px; }
+    .checkmark svg { width: 13px; height: 13px; }
+    .option-copy { display: flex; min-width: 0; flex-direction: column; gap: 3px; }
+    .option-copy strong { color: var(--text); font-size: 12px; font-weight: 700; }
+    .option-copy small { color: var(--muted); font-size: 10.5px; }
+    .action-row { display: grid; grid-template-columns: 1fr auto; gap: 9px; margin-top: 22px; }
+    .action-row .btn { min-height: 48px; }
+    .generate-btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; }
+    .notice { min-height: 19px; margin: 12px 0 0; color: var(--muted); text-align: center; font-size: 11.5px; line-height: 1.5; }
+    .footer .footer-link { color: var(--text); }
+    button:focus-visible, input:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+    @media (max-width: 560px) {
+      .password-layout { padding: 16px 14px 22px; }
+      .generator-card { padding: 16px; }
+      .password-display { gap: 5px; padding: 7px; }
+      .password-actions { gap: 5px; }
+      .password-actions .btn { padding: 9px 10px; }
+      .option { gap: 8px; padding: 9px; }
+      .option-copy strong { font-size: 11px; }
+      .option-copy small { font-size: 10px; }
+    }
+    @media (max-width: 360px) {
+      .options-grid { grid-template-columns: 1fr; }
+      .copy-label { display: none; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { scroll-behavior: auto !important; transition-duration: .01ms !important; }
+    }
+  </style>
 </head>
 <body>
-  <main class="app">
-    <div class="brand"><span class="brand-mark" aria-hidden="true">✳</span> Dalati Tools</div>
-    <section class="card" aria-labelledby="pageTitle">
-      <header class="header">
-        <div class="eyebrow"><span aria-hidden="true">●</span> Secure &amp; Free</div>
-        <h1 id="pageTitle">Password Generator</h1>
-        <p class="subtitle">Create a strong password in seconds. Your passwords are generated locally and never leave your device.</p>
-      </header>
+  <div id="floating-utilities" role="region" aria-label="Quick Settings">
+    <button class="theme-toggle" id="themeToggle" type="button" aria-label="Toggle theme" title="Toggle light/dark mode">
+      <svg class="theme-icon icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+      <svg class="theme-icon icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+    </button>
+  </div>
 
-      <div class="content">
-        <div class="password-box">
-          <input id="password" type="text" value="" readonly aria-label="Generated password" spellcheck="false" autocomplete="off" />
-          <button class="icon-btn" id="refreshBtn" type="button" aria-label="Generate a new password" title="Generate again">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 7v5h-5"/><path d="M4.9 9a7.5 7.5 0 0 1 12.4-2L20 12M4 17v-5h5"/><path d="M19.1 15a7.5 7.5 0 0 1-12.4 2L4 12"/></svg>
-          </button>
+  <header class="topbar">
+    <div class="wrap topbar-inner">
+      <div class="brand">
+        <img src="logo.webp" alt="Dalati Password Generator logo" class="logo-mark" width="40" height="40">
+        <div>
+          <h1>Dalati Password Generator</h1>
+          <p>Secure &amp; Private Password Tool</p>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <div class="password-layout">
+      <section class="card generator-card" aria-labelledby="generatorTitle">
+        <h2 id="generatorTitle">Create a strong password</h2>
+        <p class="intro">Generate a secure random password and customize its length and character types. Everything happens locally in your browser.</p>
+
+        <div class="field">
+          <span class="label" id="generatedLabel">Your password</span>
+          <div class="password-display">
+            <input id="password" type="text" value="" readonly aria-labelledby="generatedLabel" spellcheck="false" autocomplete="off">
+            <div class="password-actions">
+              <button class="btn ghost" id="refreshBtn" type="button" aria-label="Generate a new password" title="Generate again">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 7v5h-5"></path><path d="M4.9 9a7.5 7.5 0 0 1 12.4-2L20 12"></path><path d="M4 17v-5h5"></path><path d="M19.1 15a7.5 7.5 0 0 1-12.4 2L4 12"></path></svg>
+              </button>
+              <button class="btn secondary" id="copyBtn" type="button">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="8" y="8" width="12" height="12" rx="2"></rect><path d="M16 8V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h3"></path></svg>
+                <span class="copy-label" id="copyLabel">Copy</span>
+              </button>
+            </div>
+          </div>
         </div>
 
-        <div class="strength" aria-live="polite">
-          <div class="strength-top"><span>Password strength</span><strong id="strengthLabel">Very strong</strong></div>
+        <div class="strength-block" aria-live="polite">
+          <div class="strength-heading"><span>Password strength</span><strong id="strengthLabel">—</strong></div>
           <div class="strength-track"><div id="strengthBar"></div></div>
         </div>
 
-        <div class="section-title"><label for="length">Password length</label><span id="lengthValue">18 characters</span></div>
+        <div class="control-heading">
+          <label class="label" for="length">Password length</label>
+          <span id="lengthValue">18 characters</span>
+        </div>
         <div class="range-wrap">
-          <input id="length" type="range" min="8" max="64" value="18" />
+          <input id="length" type="range" min="8" max="64" value="18">
           <div class="range-labels"><span>8</span><span>32</span><span>64</span></div>
         </div>
 
-        <div class="section-title">Character types</div>
-        <div class="options">
+        <div class="label options-heading">Include character types</div>
+        <div class="options-grid">
           <label class="option">
-            <input type="checkbox" id="uppercase" checked />
-            <span class="check"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 8 3.2 3.2L13 4.5"/></svg></span>
-            <span class="option-text"><strong>Uppercase letters</strong><small>A–Z</small></span>
+            <input type="checkbox" id="uppercase" checked>
+            <span class="checkmark"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 8 3.2 3.2L13 4.5"></path></svg></span>
+            <span class="option-copy"><strong>Uppercase letters</strong><small>A–Z</small></span>
           </label>
           <label class="option">
-            <input type="checkbox" id="lowercase" checked />
-            <span class="check"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 8 3.2 3.2L13 4.5"/></svg></span>
-            <span class="option-text"><strong>Lowercase letters</strong><small>a–z</small></span>
+            <input type="checkbox" id="lowercase" checked>
+            <span class="checkmark"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 8 3.2 3.2L13 4.5"></path></svg></span>
+            <span class="option-copy"><strong>Lowercase letters</strong><small>a–z</small></span>
           </label>
           <label class="option">
-            <input type="checkbox" id="numbers" checked />
-            <span class="check"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 8 3.2 3.2L13 4.5"/></svg></span>
-            <span class="option-text"><strong>Numbers</strong><small>0–9</small></span>
+            <input type="checkbox" id="numbers" checked>
+            <span class="checkmark"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 8 3.2 3.2L13 4.5"></path></svg></span>
+            <span class="option-copy"><strong>Numbers</strong><small>0–9</small></span>
           </label>
           <label class="option">
-            <input type="checkbox" id="symbols" checked />
-            <span class="check"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 8 3.2 3.2L13 4.5"/></svg></span>
-            <span class="option-text"><strong>Symbols</strong><small>! @ # $ % &amp; *</small></span>
+            <input type="checkbox" id="symbols" checked>
+            <span class="checkmark"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 8 3.2 3.2L13 4.5"></path></svg></span>
+            <span class="option-copy"><strong>Symbols</strong><small>! @ # $ % &amp; *</small></span>
           </label>
         </div>
 
         <div class="action-row">
-          <button class="generate" id="generateBtn" type="button">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v3m0 12v3M3 12h3m12 0h3M5.64 5.64l2.12 2.12m8.48 8.48 2.12 2.12m0-12.72-2.12 2.12m-8.48 8.48-2.12 2.12"/><circle cx="12" cy="12" r="4"/></svg>
+          <button class="btn primary generate-btn" id="generateBtn" type="button">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v3m0 12v3M3 12h3m12 0h3M5.64 5.64l2.12 2.12m8.48 8.48 2.12 2.12m0-12.72-2.12 2.12m-8.48 8.48-2.12 2.12"></path><circle cx="12" cy="12" r="4"></circle></svg>
             Generate password
           </button>
-          <button class="copy-btn" id="copyBtn" type="button">Copy</button>
+          <button class="btn ghost" id="clearBtn" type="button">Clear</button>
         </div>
         <p class="notice" id="notice" role="status" aria-live="polite">Your password is generated locally in your browser.</p>
-      </div>
-    </section>
-    <p class="footer">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="10" width="16" height="11" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg>
-      No storage · No transmission · 100% local
-    </p>
+      </section>
+    </div>
   </main>
+
+  <footer class="wrap footer">
+    <p>Designed &amp; Developed by <a href="../../" class="footer-link">Rami Dalati</a> &bull; <a href="../../english/privacy/" class="footer-link">Privacy Policy</a></p>
+  </footer>
 
   <script>
     (() => {
-      'use strict';
+      "use strict";
+
       const $ = (id) => document.getElementById(id);
-      const passwordField = $('password');
-      const lengthInput = $('length');
-      const lengthValue = $('lengthValue');
-      const strengthLabel = $('strengthLabel');
-      const strengthBar = $('strengthBar');
-      const notice = $('notice');
-      const copyBtn = $('copyBtn');
+      const passwordField = $("password");
+      const lengthInput = $("length");
+      const lengthValue = $("lengthValue");
+      const strengthLabel = $("strengthLabel");
+      const strengthBar = $("strengthBar");
+      const notice = $("notice");
+      const copyBtn = $("copyBtn");
+      const copyLabel = $("copyLabel");
+
+      // Keep the theme preference consistent with Dalati QR Tools.
+      const root = document.documentElement;
+      const themeToggle = $("themeToggle");
+      function setTheme(theme) {
+        root.setAttribute("data-theme", theme);
+        try { localStorage.setItem("qr-theme", theme); } catch (_) {}
+        const themeColor = document.querySelector('meta[name="theme-color"]');
+        if (themeColor) themeColor.setAttribute("content", theme === "dark" ? "#0F0111" : "#fdf6f0");
+      }
+      let savedTheme = null;
+      try { savedTheme = localStorage.getItem("qr-theme"); } catch (_) {}
+      setTheme(savedTheme === "dark" ? "dark" : "light");
+      themeToggle.addEventListener("click", () => {
+        const nextTheme = root.getAttribute("data-theme") === "dark" ? "light" : "dark";
+        setTheme(nextTheme);
+      });
 
       const groups = [
-        { id: 'uppercase', chars: 'ABCDEFGHIJKLMNOPQRSTUVWXYZ' },
-        { id: 'lowercase', chars: 'abcdefghijklmnopqrstuvwxyz' },
-        { id: 'numbers', chars: '0123456789' },
-        { id: 'symbols', chars: '!@#$%^&*()_+-=[]{};:,.?' }
+        { id: "uppercase", chars: "ABCDEFGHIJKLMNOPQRSTUVWXYZ" },
+        { id: "lowercase", chars: "abcdefghijklmnopqrstuvwxyz" },
+        { id: "numbers", chars: "0123456789" },
+        { id: "symbols", chars: "!@#$%^&*()_+-=[]{};:,.?" }
       ];
 
       // Rejection sampling avoids modulo bias when mapping secure random bytes.
       function secureIndex(max) {
-        if (!Number.isSafeInteger(max) || max < 1 || max > 256) throw new Error('Invalid character set.');
+        if (!Number.isSafeInteger(max) || max < 1 || max > 256) {
+          throw new Error("Invalid character set.");
+        }
         const limit = Math.floor(256 / max) * max;
         const byte = new Uint8Array(1);
         do { crypto.getRandomValues(byte); } while (byte[0] >= limit);
@@ -261,93 +341,118 @@ button:focus-visible, input:focus-visible { outline: 3px solid rgba(217,119,69,.
       }
 
       function getSelectedGroups() {
-        return groups.filter(group => $(group.id).checked);
+        return groups.filter((group) => $(group.id).checked);
       }
 
       function updateRange() {
         const value = Number(lengthInput.value);
-        lengthValue.textContent = `${value} Zeichen`;
+        lengthValue.textContent = value + (value === 1 ? " character" : " characters");
         const percent = ((value - Number(lengthInput.min)) / (Number(lengthInput.max) - Number(lengthInput.min))) * 100;
-        lengthInput.style.background = `linear-gradient(to right, var(--accent) 0%, var(--accent) ${percent}%, rgba(255,255,255,.12) ${percent}%, rgba(255,255,255,.12) 100%)`;
+        lengthInput.style.background = "linear-gradient(to right, var(--accent) 0%, var(--accent) " + percent + "%, var(--border) " + percent + "%, var(--border) 100%)";
       }
 
       function updateStrength(password, selectedGroups) {
-        const length = password.length;
         const poolSize = selectedGroups.reduce((sum, group) => sum + group.chars.length, 0);
-        const entropy = length * Math.log2(Math.max(poolSize, 1));
+        const entropy = password.length * Math.log2(Math.max(poolSize, 1));
         let score = entropy < 35 ? 20 : entropy < 55 ? 45 : entropy < 75 ? 70 : entropy < 100 ? 88 : 100;
-        if (length < 12) score = Math.min(score, 45);
-        let label = 'Weak';
-        let color = '#ff6d86';
-        if (score >= 88) { label = 'Very strong'; color = '#5de0c1'; }
-        else if (score >= 70) { label = 'Strong'; color = '#8edb9b'; }
-        else if (score >= 45) { label = 'Fair'; color = '#f0bd69'; }
+        if (password.length < 12) score = Math.min(score, 45);
+
+        let label = "Weak";
+        let color = "#dc6464";
+        if (score >= 88) { label = "Very strong"; color = "#26966b"; }
+        else if (score >= 70) { label = "Strong"; color = "#50a879"; }
+        else if (score >= 45) { label = "Fair"; color = "#d69a3d"; }
+
         strengthLabel.textContent = label;
         strengthLabel.style.color = color;
-        strengthBar.style.width = `${score}%`;
+        strengthBar.style.width = score + "%";
         strengthBar.style.background = color;
+      }
+
+      function setNotice(message, isError) {
+        notice.textContent = message;
+        notice.style.color = isError ? "#c74747" : "var(--muted)";
+      }
+
+      function resetCopyState() {
+        copyLabel.textContent = "Copy";
+        copyBtn.classList.remove("copied");
       }
 
       function generatePassword() {
         const selected = getSelectedGroups();
+        resetCopyState();
+
         if (selected.length === 0) {
-          notice.textContent = 'Please select at least one character type.';
-          notice.style.color = 'var(--danger)';
-          passwordField.value = '';
-          strengthBar.style.width = '0%';
-          strengthLabel.textContent = '–';
+          passwordField.value = "";
+          strengthBar.style.width = "0%";
+          strengthLabel.textContent = "—";
+          strengthLabel.style.color = "var(--muted)";
+          setNotice("Please select at least one character type.", true);
           return;
         }
-        if (!globalThis.crypto || typeof crypto.getRandomValues !== 'function') {
-          notice.textContent = 'Your browser does not support secure random number generation.';
-          notice.style.color = 'var(--danger)';
+
+        if (!globalThis.crypto || typeof crypto.getRandomValues !== "function") {
+          setNotice("Your browser does not support secure random number generation.", true);
           return;
         }
 
         const length = Number(lengthInput.value);
-        const allChars = selected.map(group => group.chars).join('');
-        // Include at least one character from every selected group, then shuffle securely.
-        const result = selected.map(group => group.chars[secureIndex(group.chars.length)]);
-        while (result.length < length) result.push(allChars[secureIndex(allChars.length)]);
-        passwordField.value = shuffle(result).join('');
+        const allChars = selected.map((group) => group.chars).join("");
+        // Guarantee at least one character from each selected group, then shuffle securely.
+        const result = selected.map((group) => group.chars[secureIndex(group.chars.length)]);
+        while (result.length < length) {
+          result.push(allChars[secureIndex(allChars.length)]);
+        }
+
+        passwordField.value = shuffle(result).join("");
         updateStrength(passwordField.value, selected);
-        notice.textContent = 'Your password was securely generated in your browser.';
-        notice.style.color = 'var(--muted)';
-        copyBtn.textContent = 'Copy';
-        copyBtn.classList.remove('copied');
+        setNotice("Your password was securely generated in your browser.", false);
       }
 
       async function copyPassword() {
         const value = passwordField.value;
         if (!value) {
-          notice.textContent = 'Generate a password first.';
+          setNotice("Generate a password first.", true);
           return;
         }
+
         try {
           if (navigator.clipboard && window.isSecureContext) {
             await navigator.clipboard.writeText(value);
           } else {
             passwordField.focus();
             passwordField.select();
-            const copied = document.execCommand('copy');
+            const copied = document.execCommand("copy");
             passwordField.setSelectionRange(0, 0);
-            if (!copied) throw new Error('Copy failed');
+            if (!copied) throw new Error("Copy failed");
           }
-          copyBtn.textContent = 'Copied ✓';
-          copyBtn.classList.add('copied');
-          notice.textContent = 'Password copied to clipboard.';
-          notice.style.color = 'var(--accent-2)';
-        } catch (error) {
-          notice.textContent = 'Copy failed. Bitte markiere das Passwort und kopiere es manuell.';
-          notice.style.color = 'var(--danger)';
+
+          copyLabel.textContent = "Copied";
+          copyBtn.classList.add("copied");
+          setNotice("Password copied to clipboard.", false);
+          window.setTimeout(resetCopyState, 1600);
+        } catch (_) {
+          setNotice("Unable to copy. Please select the password and copy it manually.", true);
         }
       }
 
-      lengthInput.addEventListener('input', () => { updateRange(); generatePassword(); });
-      groups.forEach(group => $(group.id).addEventListener('change', generatePassword));
-      $('generateBtn').addEventListener('click', generatePassword);
-      $('refreshBtn').addEventListener('click', generatePassword);
-      copyBtn.addEventListener('click', copyPassword);
+      lengthInput.addEventListener("input", () => {
+        updateRange();
+        generatePassword();
+      });
+      groups.forEach((group) => $(group.id).addEventListener("change", generatePassword));
+      $("generateBtn").addEventListener("click", generatePassword);
+      $("refreshBtn").addEventListener("click", generatePassword);
+      copyBtn.addEventListener("click", copyPassword);
+      $("clearBtn").addEventListener("click", () => {
+        passwordField.value = "";
+        strengthBar.style.width = "0%";
+        strengthLabel.textContent = "—";
+        strengthLabel.style.color = "var(--muted)";
+        resetCopyState();
+        setNotice("Password cleared. Generate a new one whenever you are ready.", false);
+      });
 
       updateRange();
       generatePassword();
