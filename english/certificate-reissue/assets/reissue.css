@@ -61,7 +61,7 @@ body{background:linear-gradient(145deg,#eee4da 0%,#f8f5f1 52%,#eadfd5 100%)!impo
 .quiz-app{max-width:680px!important;margin:clamp(12px,3vh,32px) auto!important;padding:clamp(16px,4vw,30px)!important;background:#fff!important;border:1px solid #d7c6b9!important;border-radius:22px!important;box-shadow:0 16px 46px rgba(54,34,23,.14)!important}
 .results{gap:12px}
 #results-screen>h2{display:block!important;width:100%;padding:18px 16px!important;margin:0 0 8px!important;border-radius:16px!important;background:#32152f!important;color:#fff!important;font-size:clamp(1.25rem,4vw,1.65rem)!important;font-weight:900!important;line-height:1.45!important;text-align:center!important}
-#results-screen>.score-display,#results-screen>.score-details{display:none!important}
+#results-screen>.score-display{display:none!important}#results-screen>.score-details{display:block!important}#results-screen .results-stats-grid{display:none!important}
 .cert-request-box{background:#fff7ed!important;border:2px solid #d97745!important;border-radius:18px!important;padding:20px!important;gap:14px!important}
 .cert-status-badge.passed{background:#32152f!important;color:#fff!important;border:0!important;padding:9px 18px!important}
 .cert-instruction{font-size:1rem!important;line-height:1.9!important;color:#33251f!important}
@@ -104,3 +104,27 @@ button:focus-visible{outline:3px solid #d97745!important;outline-offset:3px!impo
  .request-cert-btn,.btn-primary,#nextBtn,#substepBtn,.kyc-submit-btn{width:100%!important;min-height:54px!important}
 }
 @media(max-width:360px){.quiz-app{padding:9px!important}.registration-card{padding:10px!important}.cert-instruction{font-size:.92rem!important}}
+
+
+/* Clear guidance for first-time applicants */
+.form-guide{
+ background:#f7f1eb!important;border:1px solid #dfcfc3!important;
+ border-right:4px solid #d97745!important;border-radius:13px!important;
+ padding:15px 17px!important;margin:16px 0 22px!important;
+ color:#30231d!important;text-align:right!important;
+}
+.form-guide-title{font-size:1rem!important;font-weight:900!important;color:#32152f!important;margin:0 0 9px!important}
+.form-guide ol{margin:0!important;padding:0 22px 0 0!important;display:grid!important;gap:8px!important}
+.form-guide li{padding-right:2px!important;font-size:.9rem!important;line-height:1.75!important}
+.form-guide li::marker{color:#9a3f12!important;font-weight:900!important}
+.form-guide p{margin:11px 0 0!important;padding-top:10px!important;border-top:1px solid #dfcfc3!important;font-size:.86rem!important;font-weight:700!important;line-height:1.7!important;color:#51443d!important}
+.registration-card .form-group{margin-bottom:18px!important}
+.registration-card .hint-text{display:block!important;margin-top:6px!important;font-size:.82rem!important;color:#51443d!important;line-height:1.7!important}
+#step1{display:block;width:100%}
+#step1 .form-group label{display:block;margin-bottom:7px!important}
+#step1 input:disabled{background:#eee9e4!important;color:#756b65!important}
+#nextBtn{margin-top:18px!important}
+@media(max-width:600px){
+ .form-guide{padding:13px!important;margin:13px 0 18px!important}
+ .form-guide li{font-size:.86rem!important}
+}
