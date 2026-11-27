@@ -39,7 +39,7 @@ const response=await fetch(SUPABASE_FUNCTION_URL,{method:"POST",headers:{apikey:
 const data=await this.parseResponse(response),id=data.application_id||data.id||data.application?.id,token=data.upload_token||data.token||data.uploadToken;
 if(!id||!token)throw new Error("لم يتم استلام بيانات جلسة الرفع من الخادم.");
 this.applicationId=id;this.uploadToken=token;
-i&&(i.style.display="none");a&&(a.style.display="block",a.scrollIntoView({behavior:"smooth",block:"start"}));
+i&&(i.style.display="none");const registrationHeader=document.querySelector(".registration-header");if(registrationHeader){const intro=registrationHeader.querySelector(".registration-subtitle"),guide=registrationHeader.querySelector(".form-guide");intro&&(intro.style.display="none"),guide&&(guide.style.display="none")}a&&(a.style.display="block",a.scrollIntoView({behavior:"smooth",block:"start"}));
 this.iti&&/^[a-z]{2}$/i.test(country)&&this.iti.setCountry(country.toLowerCase());
 }catch(err){console.error("Reissue registration failed:",err);alert(err.message||"تعذر حفظ البيانات. يرجى المحاولة مجددًا.");}
 finally{s&&(s.disabled=false,s.textContent=oldText);}
