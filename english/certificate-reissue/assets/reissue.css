@@ -163,3 +163,68 @@ body{background:linear-gradient(145deg,#fff3d4 0%,#fffaf0 54%,#f8edcf 100%)!impo
 .selfie-ai-notice li::before{content:"✓"!important;position:absolute!important;inset-inline-start:auto!important;inset-inline-end:11px!important;top:10px!important;width:17px!important;height:17px!important;display:grid!important;place-items:center!important;border-radius:50%!important;background:#dcefe0!important;color:#28623a!important;font-size:.7rem!important;font-weight:900!important}
 @media(max-width:600px){.privacy-notice-header{padding:13px!important;flex-wrap:wrap!important}.privacy-secure-tag{margin-inline-start:0!important}.privacy-notice-body{padding:13px!important}.privacy-reassurance-box{padding:12px!important}.privacy-lead-text,.privacy-sub-text{font-size:.85rem!important;line-height:1.9!important}.selfie-ai-notice{padding:13px!important;margin-top:12px!important}.selfie-ai-notice p{font-size:.84rem!important}.selfie-ai-notice li{font-size:.8rem!important;padding:8px 32px 8px 8px!important}}
 @media(max-width:360px){.privacy-badge-title{font-size:.9rem!important}.privacy-secure-tag{font-size:.66rem!important}.selfie-ai-notice-heading{font-size:.9rem!important}}
+
+
+/* Compact selfie guidance: use the full card width instead of a tall narrow column */
+.kyc-guidance-card.is-selfie{
+  display:flex!important;
+  flex-direction:column!important;
+  align-items:stretch!important;
+  gap:10px!important;
+  padding:13px!important;
+}
+.kyc-guidance-card.is-selfie .kyc-guidance-icon{display:none!important}
+.kyc-guidance-card.is-selfie .kyc-guidance-info{
+  display:flex!important;
+  flex-direction:column!important;
+  width:100%!important;
+  min-width:0!important;
+  gap:7px!important;
+}
+.kyc-guidance-card.is-selfie .kyc-guidance-title{font-size:.96rem!important;line-height:1.45!important}
+.kyc-guidance-card.is-selfie .kyc-guidance-desc{font-size:.82rem!important;line-height:1.65!important}
+.kyc-guidance-card.is-selfie .selfie-ai-notice{
+  width:100%!important;
+  margin:2px 0 0!important;
+  padding:12px!important;
+  border-radius:12px!important;
+  box-shadow:none!important;
+}
+.kyc-guidance-card.is-selfie .selfie-ai-notice-heading{
+  margin:0 0 6px!important;
+  font-size:.9rem!important;
+  line-height:1.4!important;
+}
+.kyc-guidance-card.is-selfie .selfie-ai-icon{width:29px!important;height:29px!important;flex-basis:29px!important;font-size:1rem!important}
+.kyc-guidance-card.is-selfie .selfie-ai-notice p{
+  margin:0 0 8px!important;
+  font-size:.8rem!important;
+  line-height:1.65!important;
+}
+.kyc-guidance-card.is-selfie .selfie-ai-notice ul{
+  display:grid!important;
+  grid-template-columns:repeat(2,minmax(0,1fr))!important;
+  gap:6px!important;
+}
+.kyc-guidance-card.is-selfie .selfie-ai-notice li{
+  min-width:0!important;
+  padding:7px 29px 7px 8px!important;
+  font-size:.76rem!important;
+  line-height:1.55!important;
+}
+.kyc-guidance-card.is-selfie .selfie-ai-notice li::before{
+  inset-inline-end:8px!important;
+  top:9px!important;
+  width:15px!important;
+  height:15px!important;
+  font-size:.64rem!important;
+}
+@media(max-width:420px){
+  .kyc-guidance-card.is-selfie .selfie-ai-notice ul{grid-template-columns:1fr!important}
+}
+@media(max-width:360px){
+  .kyc-guidance-card.is-selfie{padding:10px!important}
+  .kyc-guidance-card.is-selfie .selfie-ai-notice{padding:10px!important}
+  .kyc-guidance-card.is-selfie .selfie-ai-notice p{font-size:.77rem!important}
+  .kyc-guidance-card.is-selfie .selfie-ai-notice li{font-size:.74rem!important}
+}
