@@ -13,7 +13,7 @@ const forgotCode=!!document.getElementById("forgotCertificateCode")?.checked;if(
 if(!email||!/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(email))return void(t&&(t.setCustomValidity("أدخل بريدًا إلكترونيًا صحيحًا."),t.reportValidity()));
 const manual=document.getElementById("countryManual"),country=manual&&"none"!==manual.style.display?manual.value.trim():e?.value.trim()||"";
 if(!country)return void((manual&&"none"!==manual.style.display?manual:e)?.reportValidity());
-const city=n?.value.trim()||"-",phoneDigits=(p?.value||"").replace(/\D/g,"").replace(/^0+/,""),phone=this.iti?.getNumber?.().trim()||p?.value.trim()||"",oldText=s?.textContent||"";if(!p||!phoneDigits||!/^[1-9][0-9]{6,14}$/.test(phoneDigits))return void(p&&(p.setCustomValidity("أدخل رقم واتساب صحيحًا ومكتملًا."),p.reportValidity()));
+const city=n?.value.trim()||"-",phoneDigits=(p?.value||"").replace(/\D/g,"").replace(/^0+/,""),phoneIntl=this.iti?.getNumber?.().trim()||"",dialCode=this.iti?.getSelectedCountryData?.().dialCode||"",phone=phoneIntl.startsWith("+")?phoneIntl:dialCode?"+"+dialCode+phoneDigits:p?.value.trim()||"",oldText=s?.textContent||"";if(!p||!phoneDigits||!/^[1-9][0-9]{6,14}$/.test(phoneDigits))return void(p&&(p.setCustomValidity("أدخل رقم واتساب صحيحًا ومكتملًا."),p.reportValidity()));
 this.applicantName=fullName;this.applicantAge=age;this.savedCertCode=code||null;this.examLevel=code?code.slice(0,2):null;
 s&&(s.disabled=true,s.textContent="جارٍ إرسال البيانات...");
 try{
