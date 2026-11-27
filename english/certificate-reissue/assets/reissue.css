@@ -128,3 +128,16 @@ button:focus-visible{outline:3px solid #d97745!important;outline-offset:3px!impo
  .form-guide{padding:13px!important;margin:13px 0 18px!important}
  .form-guide li{font-size:.86rem!important}
 }
+
+
+/* Warm honey-cream background and a single visible page title */
+html,body{background:#fff8e8!important}
+body{background:linear-gradient(145deg,#fff3d4 0%,#fffaf0 54%,#f8edcf 100%)!important}
+.quiz-app{background:#fffdf7!important;border-color:#eadbb8!important}
+.registration-card{background:#fffdf8!important;border-color:#eadbb8!important}
+#results-screen>h2{display:none!important}
+.form-guide{background:#fff8e8!important;border-color:#eadbb8!important;border-right-color:#d6a64b!important}
+.form-guide-title{color:#65491b!important}
+.privacy-notice-card,.kyc-guidance-card,.kyc-tips-row{background:#fff9eb!important;border-color:#eadbb8!important}
+.kyc-dropzone,#kycDropzone,#uploadArea.kyc-upload-container{background:#fffaf0!important}
+@media(max-width:600px){body{background:linear-gradient(160deg,#fff3d4 0%,#fffaf0 100%)!important}}
