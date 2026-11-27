@@ -5,7 +5,7 @@ const fullName=nameInput?.value.trim()||"",age=Number(ageInput?.value),code=(cod
 if(!fullName||!/^[A-Za-z][A-Za-z .'-]{1,98}$/.test(fullName))return void(nameInput&&(nameInput.setCustomValidity("أدخل الاسم الكامل باللغة الإنجليزية بشكل صحيح."),nameInput.reportValidity()));
 if(!Number.isInteger(age)||age<1||age>120)return void(ageInput&&(ageInput.setCustomValidity("أدخل العمر بشكل صحيح."),ageInput.reportValidity()));
 if(!/^(A1|A2|B1|B2)[A-Z0-9]{6}$/.test(code))return void(codeInput&&(codeInput.setCustomValidity("تحقق من كود الشهادة. يجب أن يتكون من مستوى الشهادة و6 أحرف أو أرقام."),codeInput.reportValidity()));
-if(!email||!/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$/.test(email))return void(t&&(t.setCustomValidity("أدخل بريدًا إلكترونيًا صحيحًا."),t.reportValidity()));
+if(!email||!/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(email))return void(t&&(t.setCustomValidity("أدخل بريدًا إلكترونيًا صحيحًا."),t.reportValidity()));
 const manual=document.getElementById("countryManual"),country=manual&&"none"!==manual.style.display?manual.value.trim():e?.value.trim()||"";
 if(!country)return void((manual&&"none"!==manual.style.display?manual:e)?.reportValidity());
 const city=n?.value.trim()||"-",oldText=s?.textContent||"";
