@@ -46,3 +46,61 @@ body{min-height:100vh;min-height:100dvh;width:100%;margin:0;display:flex;align-i
 @media(max-width:600px){body{padding:10px}.quiz-app{padding:12px;border-radius:17px;box-shadow:0 6px 22px rgba(49,34,25,.06)}.registration-card{padding:15px 12px;border-radius:15px}.registration-header{margin-bottom:17px;padding-bottom:13px}.privacy-notice-header{align-items:flex-start;padding:12px}.privacy-notice-body{padding:12px}.privacy-reassurance-box{padding:11px}#uploadArea.kyc-upload-container{padding:11px;gap:12px}.kyc-guidance-card{padding:11px;gap:9px}.kyc-stepper{padding:0}.kyc-step-title{font-size:.64rem}.kyc-video-container,.kyc-example-container{padding:9px}.kyc-dropzone{min-height:132px;padding:17px 9px}}
 @media(max-width:360px){body{padding:7px}.quiz-app{padding:9px;border-radius:14px}.registration-card{padding:12px 9px}.kyc-step-bubble{width:27px;height:27px;flex-basis:27px}.kyc-stepper-line{top:13px}.kyc-step-title{font-size:.59rem}.kyc-guidance-icon{width:34px;height:34px;flex-basis:34px}.privacy-pill{font-size:.67rem;padding:5px 7px}}
 @media(prefers-reduced-motion:reduce){.quiz-app *{scroll-behavior:auto!important;animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}}
+
+
+/* Certificate reconsideration page — high-contrast, mobile-first visual system */
+:root,[data-theme="light"]{
+ --bg-base:#f2eee9;--surface-card:#fff;--surface-high:#f7f1eb;
+ --text-primary:#241b17;--text-secondary:#51443d;
+ --accent:#9a3f12;--accent-strong:#9a3f12;--on-accent-strong:#fff;
+ --border-soft:#d9c9bd;--border-subtle:#e8ddd5;
+ --shadow-card:0 12px 34px rgba(48,30,19,.12);
+}
+html,body{background:#f2eee9!important}
+body{background:linear-gradient(145deg,#eee4da 0%,#f8f5f1 52%,#eadfd5 100%)!important;color:#241b17!important;justify-content:flex-start!important;padding:clamp(12px,3vw,30px)!important}
+.quiz-app{max-width:680px!important;margin:clamp(12px,3vh,32px) auto!important;padding:clamp(16px,4vw,30px)!important;background:#fff!important;border:1px solid #d7c6b9!important;border-radius:22px!important;box-shadow:0 16px 46px rgba(54,34,23,.14)!important}
+.results{gap:12px}
+#results-screen>h2{display:block!important;width:100%;padding:18px 16px!important;margin:0 0 8px!important;border-radius:16px!important;background:#32152f!important;color:#fff!important;font-size:clamp(1.25rem,4vw,1.65rem)!important;font-weight:900!important;line-height:1.45!important;text-align:center!important}
+#results-screen>.score-display,#results-screen>.score-details{display:none!important}
+.cert-request-box{background:#fff7ed!important;border:2px solid #d97745!important;border-radius:18px!important;padding:20px!important;gap:14px!important}
+.cert-status-badge.passed{background:#32152f!important;color:#fff!important;border:0!important;padding:9px 18px!important}
+.cert-instruction{font-size:1rem!important;line-height:1.9!important;color:#33251f!important}
+.request-cert-btn,.btn-primary,#nextBtn,#substepBtn,.kyc-submit-btn,#finalSubmitBtn{
+ background:#32152f!important;color:#fff!important;border:2px solid #32152f!important;
+ border-radius:12px!important;min-height:54px!important;padding:12px 20px!important;
+ font-weight:800!important;font-size:1rem!important;box-shadow:0 4px 0 #1e0c1c!important;
+ transition:transform .15s,filter .15s!important
+}
+.request-cert-btn:active,.btn-primary:active,#nextBtn:active,#substepBtn:active,.kyc-submit-btn:active{transform:translateY(2px)!important;box-shadow:0 2px 0 #1e0c1c!important}
+.registration-card{background:#fff!important;border:1px solid #d6c5b8!important;border-radius:18px!important;padding:clamp(16px,4vw,26px)!important;box-shadow:0 8px 24px rgba(50,21,47,.07)!important}
+.registration-header{background:#32152f!important;color:#fff!important;padding:20px 16px!important;border-radius:14px!important;margin:-4px -4px 22px!important}
+.registration-title{color:#fff!important;font-size:1.35rem!important}
+.registration-subtitle{color:#f5e9f2!important;font-size:.95rem!important;line-height:1.8!important}
+.registration-card .form-group label{color:#30231d!important;font-size:.95rem!important;font-weight:800!important}
+.registration-card input:not([type=checkbox]),.registration-card select,.registration-card textarea,
+#dataForm input:not([type=checkbox]),#dataForm select{
+ width:100%!important;min-height:50px!important;background:#fff!important;color:#241b17!important;
+ border:1.5px solid #bca99b!important;border-radius:10px!important;padding:11px 13px!important;
+ font-size:16px!important;box-shadow:none!important
+}
+.registration-card input:focus,.registration-card select:focus,#dataForm input:focus,#dataForm select:focus{outline:3px solid rgba(217,119,69,.22)!important;border-color:#9a3f12!important}
+.hint-text,.registration-subtitle{line-height:1.75!important}
+#nextBtn{margin-top:12px!important;width:100%!important}
+.privacy-notice-card,.kyc-guidance-card,.kyc-tips-row{background:#f7f1eb!important;border:1px solid #d9c9bd!important;border-radius:14px!important;color:#30231d!important}
+.kyc-guidance-card{padding:16px!important}
+.kyc-dropzone,#kycDropzone,#uploadArea.kyc-upload-container{background:#fff8f1!important;border:2px dashed #b85b2a!important;border-radius:14px!important}
+.kyc-submit-btn{background:#9a3f12!important;border-color:#9a3f12!important;box-shadow:0 4px 0 #68280b!important}
+button:disabled{opacity:.48!important;filter:grayscale(.25)!important;box-shadow:none!important;cursor:not-allowed!important}
+button:focus-visible{outline:3px solid #d97745!important;outline-offset:3px!important}
+@media(max-width:600px){
+ body{padding:10px!important}
+ .quiz-app{margin:8px auto!important;padding:12px!important;border-radius:16px!important}
+ #results-screen>h2{padding:16px 12px!important;border-radius:12px!important}
+ .cert-request-box{padding:15px!important}
+ .registration-card{padding:13px!important}
+ .registration-header{padding:17px 12px!important;margin:0 0 18px!important}
+ .registration-title{font-size:1.2rem!important}
+ .registration-subtitle{font-size:.88rem!important}
+ .request-cert-btn,.btn-primary,#nextBtn,#substepBtn,.kyc-submit-btn{width:100%!important;min-height:54px!important}
+}
+@media(max-width:360px){.quiz-app{padding:9px!important}.registration-card{padding:10px!important}.cert-instruction{font-size:.92rem!important}}
