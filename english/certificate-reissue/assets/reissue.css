@@ -287,3 +287,26 @@ body{background:linear-gradient(145deg,#fff3d4 0%,#fffaf0 54%,#f8edcf 100%)!impo
 .reissue-reference-box>strong{font-size:1.8rem;line-height:1.4;letter-spacing:.12em;font-weight:900;font-variant-numeric:tabular-nums;direction:ltr}
 .reissue-reference-box>small{font-size:.8rem;line-height:1.7;color:#66574f}
 @media(max-width:600px){.reissue-reference-box{padding:13px}.reissue-reference-box>strong{font-size:1.65rem}}
+
+
+/* Make the review period the primary next step; keep support secondary */
+.reissue-waiting-notice{
+  display:grid;gap:9px;width:100%;padding:17px;
+  border:1px solid #e6d39e;border-inline-start:5px solid #c18a27;
+  border-radius:14px;background:#fff8e6;color:#493719;text-align:start;
+}
+.reissue-waiting-notice>strong{font-size:1.05rem;font-weight:900;line-height:1.7;color:#654719}
+.reissue-waiting-notice p,.reissue-support-section p{margin:0;font-size:.9rem;line-height:1.9;overflow-wrap:anywhere}
+.reissue-support-section{
+  display:grid;gap:9px;width:100%;padding:15px;
+  border:1px solid #e8ddd5;border-radius:14px;background:#fff;color:#51443d;
+}
+.reissue-support-section>strong{font-size:.92rem;font-weight:850;color:#51443d}
+.reissue-support-link{margin-top:3px;background:#f3f0ec;color:#51443d!important;border:1px solid #d9cfc6;box-shadow:none;font-size:.9rem;min-height:48px}
+.reissue-support-link:active{transform:translateY(1px);box-shadow:none}
+@media(max-width:600px){
+  .reissue-waiting-notice{padding:14px;gap:8px}
+  .reissue-waiting-notice>strong{font-size:.98rem}
+  .reissue-waiting-notice p,.reissue-support-section p{font-size:.85rem;line-height:1.85}
+  .reissue-support-section{padding:13px}
+}
