@@ -280,3 +280,10 @@ body{background:linear-gradient(145deg,#fff3d4 0%,#fffaf0 54%,#f8edcf 100%)!impo
 .reissue-support-link:active{transform:translateY(2px);box-shadow:0 2px 0 #0d6034}
 .reissue-support-link:focus-visible{outline:3px solid #d97745;outline-offset:3px}
 @media(max-width:600px){.reissue-success-heading{padding:14px;gap:10px}.reissue-success-heading strong{font-size:1.02rem}.reissue-success-heading p,.reissue-success-message p{font-size:.88rem;line-height:1.85}.reissue-success-message{padding:13px}}
+
+/* Six-digit request reference */
+.reissue-reference-box{display:flex;flex-direction:column;align-items:center;gap:6px;width:100%;padding:16px;border:1px solid #e8cbb8;border-radius:14px;background:#fff7f0;color:#30251f;text-align:center}
+.reissue-reference-box>span{font-size:.9rem;font-weight:750;color:#70432d}
+.reissue-reference-box>strong{font-size:1.8rem;line-height:1.4;letter-spacing:.12em;font-weight:900;font-variant-numeric:tabular-nums;direction:ltr}
+.reissue-reference-box>small{font-size:.8rem;line-height:1.7;color:#66574f}
+@media(max-width:600px){.reissue-reference-box{padding:13px}.reissue-reference-box>strong{font-size:1.65rem}}
